@@ -1,0 +1,936 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+<title>Agro Jefas — Decisiones que mueven tu agroempresa · v1.3</title>
+<style>
+  :root{
+    --bg:#f3f4ef; --card:#ffffff; --ink:#17352d; --muted:#66746d; --line:#dfe5df;
+    --deep:#173f35; --deep-2:#225246; --gold:#e7ad2f; --gold-soft:#fff6dc;
+    --soft:#f1f6f3; --soft-2:#f6f7fb; --blue-soft:#eef6f8; --warn:#9a6a17;
+    --shadow:0 12px 32px rgba(23,63,53,.10); --radius:22px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+  button,input{font:inherit}
+  button{cursor:pointer}
+  button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid rgba(231,173,47,.55);outline-offset:3px}
+  .shell{max-width:780px;margin:0 auto;padding:0 14px 56px}
+  .utilitybar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 4px;color:#506159;font-size:13px}
+  .utility-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .mini-brand{font-weight:850;letter-spacing:.01em}
+  .btn{border:0;border-radius:15px;padding:13px 18px;min-height:48px;font-weight:800;background:var(--deep);color:#fff;box-shadow:none}
+  .btn:hover{background:var(--deep-2)}
+  .btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost{background:transparent;color:var(--deep);border:1px solid #bfcfc7;min-height:40px;padding:8px 12px}
+  .btn.wide{width:100%;font-size:17px;margin-top:14px}
+  .hidden{display:none!important}
+
+  /* INTRO */
+  .intro-card,.end-card{background:var(--card);border-radius:28px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line)}
+  .intro-banner,.end-banner{background:var(--deep);color:#fff;padding:30px 28px 28px}
+  .intro-banner .eyebrow,.end-banner .eyebrow{color:var(--gold)}
+  .intro-banner h1,.end-banner h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(34px,7vw,50px);line-height:1.05;margin:8px 0 14px;letter-spacing:-.025em}
+  .intro-banner p,.end-banner p{font-size:18px;line-height:1.55;margin:0;color:#eef6f1}
+  .intro-body,.end-body{padding:26px 28px 30px}
+  h1,h2,h3{line-height:1.18;margin-top:0;letter-spacing:-.02em}
+  h2{font-size:clamp(23px,4vw,30px)}
+  h3{font-size:18px}
+  .eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:12px;font-weight:900;color:#8a650f;margin-bottom:9px}
+  .role-box{font-size:17px;line-height:1.6;margin-bottom:24px}
+  .persona-card{display:grid;grid-template-columns:170px 1fr;gap:20px;align-items:center;background:#f6f3e8;border:1px solid #eadfbd;border-radius:22px;padding:18px;margin:0 0 24px}
+  .persona-visual{min-height:170px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#dff0e4 0%,#f7e8b8 100%);display:grid;place-items:center}
+  .persona-visual svg{width:100%;height:100%;display:block}
+  .persona-copy h2{font-size:24px;margin:0 0 8px}
+  .persona-copy p{margin:0;color:#41534b;line-height:1.58}
+  .persona-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+  .persona-meta span{font-size:12px;font-weight:800;padding:6px 9px;border-radius:999px;background:#fff;border:1px solid #ded6bc;color:#4e5d56}
+  .role-box b{font-weight:900}
+  .mission{font-size:18px;line-height:1.6;margin:0 0 22px}
+  .indicator-list{display:grid;gap:10px;margin:14px 0 24px}
+  .indicator-intro{display:grid;grid-template-columns:42px 1fr;gap:11px;align-items:start}
+  .indicator-icon{width:38px;height:38px;border-radius:12px;background:var(--soft);display:grid;place-items:center;font-weight:900;color:var(--deep)}
+  .indicator-intro b{display:block;margin-bottom:1px}
+  .indicator-intro span{color:#4f6058;font-size:14px}
+  .how-box{background:var(--soft-2);border-radius:18px;padding:17px 18px;margin:18px 0}
+  .how-box ol{margin:8px 0 0;padding-left:21px}
+  .how-box li{margin:6px 0}
+  .key-message{background:var(--gold-soft);border-radius:17px;padding:16px 18px;margin:18px 0;color:#584817}
+  .smallprint{font-size:11px;color:#7a857f;margin-top:16px}
+
+  /* GAME */
+  .game-shell{background:#fff;min-height:78vh;border-radius:22px;overflow:visible;box-shadow:var(--shadow);border:1px solid var(--line)}
+  .game-dashboard{position:sticky;top:0;z-index:20;background:var(--deep);color:#fff;padding:17px 20px 13px;box-shadow:0 7px 18px rgba(23,63,53,.18)}
+  .game-title-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+  .game-title{font-family:Georgia,"Times New Roman",serif;font-weight:800;font-size:21px}
+  .round-badge{font-size:11px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;color:#e8eee9}
+  .compact-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px 14px}
+  .mini-stat{min-width:0}
+  .mini-stat-head{display:flex;align-items:center;justify-content:space-between;gap:7px;font-size:11px;line-height:1.2;margin-bottom:4px}
+  .mini-stat-head span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mini-status{font-weight:850;color:#f4ead0;white-space:nowrap}
+  .mini-bar{height:6px;background:rgba(255,255,255,.22);border-radius:999px;overflow:hidden}
+  .mini-bar i{display:block;height:100%;background:#8fd0a5;border-radius:999px;transition:width .25s ease}
+  .mini-bar i.attn{background:var(--gold)}
+  .progress-wrap{display:flex;justify-content:center;gap:7px;margin-top:12px}
+  .progress-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.28)}
+  .progress-dot.done{background:#a7d5b4}
+  .progress-dot.active{background:var(--gold);transform:scale(1.12)}
+  .signal-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .signal{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);padding:5px 8px;border-radius:999px;font-size:11px;color:#f7f7f4}
+  .game-main{padding:24px 26px 28px}
+  .stage-screen{padding:2px 0 4px}
+  .stage-title{font-family:Georgia,"Times New Roman",serif;color:#173f35;font-size:clamp(31px,6vw,43px);margin:8px 0 14px}
+  .stage-copy{font-size:18px;line-height:1.6;margin:0 0 16px;color:#33463e}
+  .stage-event{background:var(--gold-soft);border-radius:17px;padding:15px 17px;margin:16px 0}
+  .stage-event b{display:block;margin-bottom:4px;color:#6f520c}
+  .past-echo{border-left:4px solid #7bb28f;background:var(--soft);border-radius:0 15px 15px 0;padding:13px 15px;margin:16px 0}
+  .past-echo b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:#4e765d;margin-bottom:3px}
+  .event-card{background:#fff3de;border:1px solid #edd49d;border-radius:18px;padding:15px 17px;margin:0 0 18px}
+  .event-card strong{display:block;color:#805a0b;margin-bottom:5px;font-size:16px}
+  .decision-screen .eyebrow,.feedback-screen .eyebrow{margin-bottom:10px}
+  .decision-card{background:var(--soft-2);border-radius:20px;padding:20px}
+  .decision-card h2{font-size:24px;color:#173f35;margin-bottom:9px}
+  .decision-context{color:#506159;margin:0 0 15px;font-size:15px}
+  .choice-grid{display:grid;gap:11px}
+  .choice{width:100%;text-align:left;background:#fff;border:2px solid #e1e6e2;border-radius:17px;padding:16px 17px;min-height:76px;color:var(--ink);transition:.15s ease}
+  .choice:hover{border-color:#9ab9a6;transform:translateY(-1px)}
+  .choice:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  .choice strong{display:block;font-size:16px;line-height:1.35;margin-bottom:5px}
+  .choice small{display:block;color:#5e6c65;line-height:1.45}
+  .choice-cost{display:inline-block;margin-top:9px;background:#f8f5ea;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:800;color:#715d25}
+  .feedback-screen .chosen{font-size:16px;line-height:1.55;margin-bottom:11px}
+  .delta-row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 17px}
+  .delta{font-size:13px;padding:7px 10px;border-radius:999px;background:#edf2ef;font-weight:850;color:#345345}
+  .delta.trade{background:#fff2dd;color:#7e5c12}
+  .delta.watch{background:#f4eeee;color:#765c50}
+  .meaning-box{background:var(--gold-soft);border-radius:18px;padding:17px 18px;margin:13px 0}
+  .meaning-box h3,.future-box h3,.result-event h3{font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 7px;color:#805f12}
+  .meaning-box p,.future-box p,.result-event p{margin:0;font-size:16px;line-height:1.58}
+  .future-box{background:var(--soft);border-radius:17px;padding:15px 17px;margin:12px 0}
+  .future-box h3{color:#4b735a}
+  .result-event{background:#eef4f7;border-radius:17px;padding:15px 17px;margin:12px 0}
+  .result-event h3{color:#486676}
+  .decision-memory{margin-top:22px;border-top:1px solid var(--line);padding-top:14px;color:#506159;font-size:13px}
+  .decision-memory summary{cursor:pointer;font-weight:800;color:#35594b}
+  .history{display:grid;gap:8px;margin-top:10px}
+  .history-item{padding:9px 11px;background:#f7f9f7;border-radius:10px;font-size:12px}
+  .history-item b{display:block;margin-bottom:2px}
+
+  /* END */
+  .end-card{margin-top:0}
+  .profile-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);font-weight:900}
+  .end-banner h1{font-size:clamp(32px,6vw,46px)}
+  .end-section{margin:22px 0}
+  .end-section h2{font-size:23px;margin-bottom:11px}
+  .today-tomorrow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .horizon-card{background:#f8faf8;border:1px solid var(--line);border-radius:18px;padding:17px}
+  .horizon-card.future{background:#f5f8f6}
+  .horizon-card h3{margin-bottom:10px}
+  .metric-list{display:grid;gap:10px}
+  .metric-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+  .metric-row b{font-size:14px}
+  .metric-status{font-size:12px;font-weight:850;color:#52675c}
+  .metric-bar{grid-column:1/-1;height:7px;background:#e5ebe6;border-radius:999px;overflow:hidden}
+  .metric-bar i{display:block;height:100%;background:#77ad89;border-radius:999px}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .simple-card{border:1px solid var(--line);border-radius:17px;padding:16px;background:#fff}
+  .simple-card ul{padding-left:18px;margin:8px 0 0}
+  .simple-card li{margin:7px 0}
+  .lesson-grid{display:grid;gap:9px}
+  .lesson{background:var(--gold-soft);border:1px solid #efdfaf;border-radius:14px;padding:13px 15px;line-height:1.5}
+  .echo-grid{display:grid;gap:9px}
+  .echo-card{background:var(--soft);border-radius:14px;padding:13px 15px}
+  .echo-card b{display:block;margin-bottom:3px}
+  .all-decisions{background:#f7f8f7;border-radius:15px;padding:13px 15px}
+  .all-decisions summary{font-weight:850;cursor:pointer}
+  .reflection{background:#f8f5ea;border-radius:17px;padding:16px 18px}
+  .reflection ul{margin:8px 0 0;padding-left:20px}
+  .end-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+  /* FACILITATOR */
+  .facilitator{display:none;margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow)}
+  .facilitator.open{display:block}
+  .system-map{display:grid;gap:8px;max-width:620px;margin:14px auto}
+  .system-node{padding:11px 13px;border-radius:12px;border:1px solid var(--line);background:#fff;text-align:center;font-weight:800}
+  .arrow{text-align:center;color:var(--muted);font-size:20px}
+  .tag-list{display:flex;flex-wrap:wrap;gap:7px}
+  .tag{padding:6px 9px;border-radius:999px;background:#f2f4f2;border:1px solid var(--line);font-size:12px;font-weight:700}
+  .seed-box{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .seed-box input{width:110px;border:1px solid var(--line);border-radius:10px;padding:8px;background:#fff;color:var(--ink)}
+  footer{color:#7d8882;font-size:11px;text-align:center;margin-top:20px}
+
+  @media(max-width:620px){
+    .shell{padding:0 0 38px}.utilitybar{padding:10px 13px}.intro-card,.end-card,.game-shell{border-radius:0;border-left:0;border-right:0}
+    .intro-banner,.end-banner{padding:25px 20px}.intro-body,.end-body{padding:22px 20px}.game-main{padding:21px 18px 25px}
+    .game-dashboard{padding:14px 16px 11px}.game-title{font-size:19px}.compact-stats{gap:8px 10px}.mini-stat-head{font-size:10px}
+    .today-tomorrow,.two-col{grid-template-columns:1fr}
+    .persona-card{grid-template-columns:1fr}.persona-visual{min-height:155px}.persona-copy h2{font-size:22px}
+  }
+  @media(max-width:440px){
+    .utilitybar{font-size:12px}.btn{min-height:48px}.compact-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.game-title{font-size:18px}
+    .round-badge{font-size:10px}.stage-copy{font-size:17px}.decision-card{padding:16px}.choice{padding:15px;min-height:72px}.choice strong{font-size:15px}
+    .intro-banner p{font-size:17px}.indicator-intro{grid-template-columns:38px 1fr}.indicator-icon{width:34px;height:34px}
+  }
+  @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="utilitybar">
+    <div class="mini-brand">Agro Jefas</div>
+    <div class="utility-actions">
+      <button class="btn ghost" id="facBtn">Para facilitación</button>
+      <button class="btn ghost hidden" id="restartTop">Reiniciar</button>
+    </div>
+  </div>
+
+  <section id="intro" class="intro-card">
+    <div class="intro-banner">
+      <div class="eyebrow">Simulación de decisiones · Agro Jefas</div>
+      <h1>Decisiones que mueven tu agroempresa</h1>
+      <p>Lo que decides hoy puede cambiar lo que tu negocio podrá hacer mañana.</p>
+    </div>
+    <div class="intro-body">
+      <div class="persona-card">
+        <div class="persona-visual" role="img" aria-label="Ilustración de Mariela, agroempresaria dominicana, frente a su parcela y área de empaque">
+          <svg viewBox="0 0 260 190" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="260" height="190" fill="#dff0e4"/>
+            <circle cx="218" cy="34" r="20" fill="#f4c95d"/>
+            <path d="M0 118 C45 90 92 100 130 112 C170 125 212 109 260 90 L260 190 L0 190 Z" fill="#93bf86"/>
+            <path d="M0 142 C52 118 104 126 156 140 C196 151 225 138 260 126 L260 190 L0 190 Z" fill="#6f9e65"/>
+            <rect x="184" y="92" width="56" height="49" rx="4" fill="#f5efe2"/>
+            <path d="M178 96 L212 72 L247 96 Z" fill="#b85d42"/>
+            <rect x="197" y="111" width="15" height="30" fill="#8e6a4b"/>
+            <rect x="219" y="108" width="12" height="12" fill="#9ac7d4"/>
+            <ellipse cx="91" cy="64" rx="27" ry="12" fill="#d8a33b"/>
+            <rect x="74" y="62" width="34" height="8" rx="4" fill="#c18c28"/>
+            <circle cx="91" cy="77" r="20" fill="#a96943"/>
+            <path d="M70 79 Q91 97 112 79 L108 104 L74 104 Z" fill="#7c3f2c"/>
+            <path d="M63 116 Q91 94 119 116 L130 176 L51 176 Z" fill="#2f6f5b"/>
+            <path d="M63 119 L45 157" stroke="#a96943" stroke-width="11" stroke-linecap="round"/>
+            <path d="M119 119 L137 157" stroke="#a96943" stroke-width="11" stroke-linecap="round"/>
+            <rect x="44" y="155" width="29" height="18" rx="4" fill="#e6b75b"/>
+            <rect x="134" y="154" width="31" height="19" rx="4" fill="#e6b75b"/>
+            <circle cx="54" cy="162" r="4" fill="#5f8e52"/>
+            <circle cx="63" cy="166" r="4" fill="#6b9c58"/>
+            <circle cx="143" cy="162" r="4" fill="#5f8e52"/>
+            <circle cx="153" cy="166" r="4" fill="#6b9c58"/>
+            <path d="M18 165 Q32 149 46 165" stroke="#4d7b45" stroke-width="5" fill="none"/>
+            <path d="M20 153 Q34 138 48 153" stroke="#4d7b45" stroke-width="5" fill="none"/>
+          </svg>
+        </div>
+        <div class="persona-copy">
+          <div class="eyebrow">Conoce tu agroempresa</div>
+          <h2>Eres Mariela</h2>
+          <p>Administras una pequeña agroempresa familiar en <b>San Juan, República Dominicana</b>. Produces hortalizas frescas y acondicionas parte de la cosecha para venderla a mercados locales y pequeños comercios. Trabajan <b>6 personas de forma fija</b> y, cuando llega la cosecha, contratas apoyo temporal.</p>
+          <div class="persona-meta"><span>Negocio familiar</span><span>6 empleos fijos</span><span>Mercado local y comercial</span><span>Caso ficticio</span></div>
+        </div>
+      </div>
+
+      <div class="role-box"><b>Tu rol:</b> tomas las decisiones principales del negocio: cómo usar el dinero disponible, cómo manejar suelo y agua, cuándo invertir, cómo cuidar el producto y al equipo, y qué oportunidades comerciales aceptar.</div>
+
+      <h2>Tu misión</h2>
+      <p class="mission">Mantener el negocio funcionando hoy <b>sin dejarlo demasiado vulnerable para mañana</b>. Empiezas un nuevo ciclo con una operación que funciona, pero con recursos que no alcanzan para fortalecer todo a la vez. Durante el recorrido aparecerán cambios de clima, costos, oportunidades y problemas que pondrán a prueba tus decisiones.</p>
+
+      <h3>Esto es lo que vas a observar</h3>
+      <div class="indicator-list">
+        <div class="indicator-intro"><div class="indicator-icon">$</div><div><b>Dinero disponible</b><span>Lo que puedes usar hoy para operar, invertir o responder a un problema.</span></div></div>
+        <div class="indicator-intro"><div class="indicator-icon">↗</div><div><b>Resultado del negocio</b><span>Cómo se combinan tus ventas, costos y pérdidas.</span></div></div>
+        <div class="indicator-intro"><div class="indicator-icon">P</div><div><b>Producción y operación</b><span>Qué tanto producto puedes aprovechar y qué tan bien funciona la agroempresa.</span></div></div>
+        <div class="indicator-intro"><div class="indicator-icon">A</div><div><b>Suelo y agua</b><span>Qué tan preparados están los recursos que sostienen tu producción.</span></div></div>
+        <div class="indicator-intro"><div class="indicator-icon">S</div><div><b>Seguridad del producto</b><span>Qué tan controlados están los riesgos de higiene y contaminación.</span></div></div>
+        <div class="indicator-intro"><div class="indicator-icon">E</div><div><b>Equipo de trabajo</b><span>Qué tan protegidas están las personas y la capacidad para sacar el trabajo adelante.</span></div></div>
+      </div>
+
+      <div class="how-box">
+        <b>¿Cómo se juega?</b>
+        <ol><li>Lee una situación.</li><li>Elige qué harías.</li><li>Mira qué cambió en ese momento.</li><li>Más adelante, algunas decisiones volverán a importar.</li><li>Al final verás cómo quedó tu agroempresa.</li></ol>
+      </div>
+
+      <div class="key-message"><b>No existe una opción perfecta para todo.</b><br>Algunas decisiones cuidan el dinero hoy; otras reducen riesgos o construyen capacidad para después. La idea es observar cómo todo se conecta.</div>
+      <button class="btn wide" id="startBtn">Empezar</button>
+      <div class="smallprint">Esta es una simulación educativa. Los valores internos sirven para crear situaciones comparables y no son predicciones de una agroempresa real.</div>
+    </div>
+  </section>
+
+  <section id="game" class="game-shell hidden">
+    <header class="game-dashboard">
+      <div class="game-title-row"><div class="game-title">Tu agroempresa</div><div class="round-badge" id="roundBadge">RONDA 1</div></div>
+      <div id="stats" class="compact-stats"></div>
+      <div id="roundList" class="progress-wrap" aria-label="Progreso de la simulación"></div>
+      <div id="signals" class="signal-row" aria-live="polite"></div>
+    </header>
+    <main class="game-main">
+      <div id="eventArea"></div>
+      <div id="decisionPanel" aria-live="polite"></div>
+      <details class="decision-memory"><summary>Ver mis decisiones anteriores</summary><div id="history" class="history"><div>Tus decisiones aparecerán aquí.</div></div></details>
+    </main>
+  </section>
+
+  <section id="end" class="end-card hidden"></section>
+
+  <section id="facilitator" class="facilitator">
+    <div class="eyebrow">Vista para facilitación</div>
+    <h2>Cómo funciona el sistema</h2>
+    <p>La simulación no entrega dinero o puntos por seleccionar una BPA/BPM. Las decisiones modifican estados, capacidades, riesgos y condiciones de acceso; los resultados aparecen después de esas interacciones.</p>
+    <div class="system-map">
+      <div class="system-node">Factores externos</div><div class="arrow">↓</div>
+      <div class="system-node">Decisiones</div><div class="arrow">↓</div>
+      <div class="system-node">Capacidades y procesos</div><div class="arrow">↓</div>
+      <div class="system-node">Riesgos / resultados intermedios</div><div class="arrow">↓</div>
+      <div class="system-node">Producto y capacidad comercial</div><div class="arrow">↓</div>
+      <div class="system-node">Ventas / costos</div><div class="arrow">↓</div>
+      <div class="system-node">Resultado del negocio</div>
+    </div>
+    <div class="tag-list"><span class="tag">Riesgo ≠ evento</span><span class="tag">Efectos diferidos</span><span class="tag">Gates comerciales</span><span class="tag">Memoria causal</span><span class="tag">Dinero disponible ≠ resultado</span><span class="tag">Resiliencia = lectura derivada</span></div>
+    <hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
+    <h3>Control de escenario</h3>
+    <div class="seed-box"><label for="seedInput"><b>Semilla</b></label><input id="seedInput" type="number" value="20260924"><button class="btn secondary" id="applySeed">Aplicar al reiniciar</button></div>
+    <p style="font-size:12px;color:var(--muted)">La semilla permite repetir escenarios comparables. El azar está limitado y no sustituye el efecto de las decisiones.</p>
+    <details><summary><b>Calibración v1.3</b></summary><p style="font-size:12px;color:var(--muted)">Se mantiene la calibración por trayectorias y el perfil “Sólida y adaptable”. En v1.3 se ajustó el punto de partida de caja para que sea estable, no holgado, y se suavizó el costo del volumen piloto para que funcione como entrada gradual al mercado sin castigar desproporcionadamente el resultado de corto plazo.</p></details>
+    <details><summary><b>Variables internas principales</b></summary><pre id="debugState" style="white-space:pre-wrap;background:#f7f8f6;padding:12px;border-radius:12px;border:1px solid var(--line);font-size:11px"></pre></details>
+  </section>
+
+  <footer>Versión 1.3 · Agro Jefas · Simulación educativa de decisiones</footer>
+</div>
+<script>
+/* =========================================================
+   CONFIG — PARAMETROS PEDAGOGICOS PROVISIONALES
+   ========================================================= */
+const CONFIG = {
+  seed: 20260924,
+  effect: { LOW:4, MEDIUM:8, HIGH:14 },
+  cost: { LOW:3, MEDIUM:7, HIGH:12 },
+  initial: {
+    cash:70, businessResult:0, productiveResources:48, foodSafety:52, operationalSafety:52,
+    soilCondition:45, soilCover:28, waterMgmt:38, waterAvailability:62, waterStress:18,
+    nutrientDecisionQuality:42, nutrientEfficiency:42, nutrientAdequacy:50,
+    pestInfo:32, pestRisk:38, erosionRisk:36,
+    bpmKnowledge:52, bpmInfrastructure:46, bpmImplementation:48, contaminationRisk:30,
+    equipmentCondition:56, failureRisk:34, operationalCapacity:68, operationalPressure:18,
+    traceability:38, preparedness:36, pesticideExposure:18, heatExposure:14,
+    productionPotential:100, producedProduct:0, usableProduct:0, sellablePotential:0,
+    eligibility:34, logisticsCapacity:72, baseDemand:42, extraDemand:0, acceptedExtraDemand:0,
+    diversification:18, dependence:72, complexity:18,
+    revenue:0, costs:0, cumulativeLoss:0,
+    buyerMode:'none', disruption:null, trainingRefresh:false,
+    processingShare:0.9
+  },
+  thresholds:{ buyerFull:68, buyerPilot:52, highPressure:70, lowCash:25 },
+  economics:{ basePrice:1.0, extraPrice:1.0, revenueScale:1.15 },
+  roundNames:['Preparar','Manejar','Resistir','Cosechar y procesar','Crecer','Responder']
+};
+
+/* =========================================================
+   SEEDED RNG
+   ========================================================= */
+function mulberry32(a){return function(){let t=a+=0x6D2B79F5;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
+let rng = mulberry32(CONFIG.seed);
+function rand(){ return rng(); }
+function chance(p){ return rand() < Math.max(0,Math.min(1,p)); }
+
+/* =========================================================
+   STATE
+   ========================================================= */
+let STATE;
+function freshState(){
+  return {
+    ...JSON.parse(JSON.stringify(CONFIG.initial)),
+    round:1, decisionIndex:0, history:[], eventLog:[], delayQueue:[], flags:{}, finished:false,
+    seed:CONFIG.seed
+  };
+}
+function clamp(v,min=0,max=100){ return Math.max(min,Math.min(max,v)); }
+function add(key,delta){
+  if(typeof STATE[key] !== 'number') return;
+  STATE[key] += delta;
+  if(!['businessResult','revenue','costs'].includes(key)) STATE[key]=clamp(STATE[key],0,100);
+}
+function spend(amount){
+  STATE.costs += amount;
+  STATE.cash = clamp(STATE.cash - amount,0,100);
+  recalcBusinessResult();
+}
+function earn(amount){ STATE.revenue += amount; STATE.cash = clamp(STATE.cash + amount,0,100); recalcBusinessResult(); }
+function recalcBusinessResult(){ STATE.businessResult = STATE.revenue - STATE.costs; }
+
+/* =========================================================
+   DELAY_QUEUE
+   ========================================================= */
+function schedule(round,effect,note){ STATE.delayQueue.push({round,effect,note}); }
+function applyDueDelays(round){
+  const due=STATE.delayQueue.filter(x=>x.round===round);
+  STATE.delayQueue=STATE.delayQueue.filter(x=>x.round!==round);
+  due.forEach(item=>{ Object.entries(item.effect).forEach(([k,v])=>add(k,v)); if(item.note) STATE.eventLog.push(item.note); });
+}
+
+/* =========================================================
+   CAUSAL_ENGINE
+   ========================================================= */
+function updateDerived(){
+  // Suelo/agua: capacidades concretas, no “resiliencia” causal.
+  STATE.productiveResources = clamp(
+    0.42*STATE.soilCondition + 0.34*STATE.waterMgmt + 0.24*(100-STATE.waterStress)
+  );
+
+  // La presión operacional es una variable derivada: demanda aceptada vs capacidad + complejidad.
+  const totalAccepted = STATE.baseDemand + STATE.acceptedExtraDemand;
+  STATE.operationalPressure = clamp(
+    18 + Math.max(0,totalAccepted-STATE.operationalCapacity)*0.90 + STATE.complexity*0.18
+  );
+
+  // Implementación BPM efectiva: la presión puede limitar la ejecución sin erosionar
+  // permanentemente el conocimiento o la implementación base cada vez que se renderiza.
+  const bpmCeiling = Math.min(STATE.bpmKnowledge, STATE.bpmInfrastructure+12);
+  STATE.bpmEffectiveImplementation = clamp(
+    Math.min(STATE.bpmImplementation,bpmCeiling) - Math.max(0,STATE.operationalPressure-55)*0.18
+  );
+
+  // Inocuidad visible es lectura agregada inversa de riesgo; no produce causalidad.
+  STATE.contaminationRisk = clamp(55 - STATE.bpmEffectiveImplementation*0.52 + STATE.operationalPressure*0.20);
+  STATE.foodSafety = clamp(100 - STATE.contaminationRisk);
+
+  // Seguridad/capacidad visible combina exposición humana y condición operacional.
+  STATE.operationalSafety = clamp(
+    0.50*(100-STATE.heatExposure) + 0.25*(100-STATE.pesticideExposure) + 0.25*STATE.equipmentCondition
+  );
+
+  // Riesgos reactualizados sin determinismo.
+  STATE.erosionRisk = clamp(48 - STATE.soilCover*0.38 - STATE.soilCondition*0.16);
+  STATE.failureRisk = clamp(58 - STATE.equipmentCondition*0.48 + STATE.operationalPressure*0.16);
+}
+
+
+/* =========================================================
+   RISK_ENGINE
+   ========================================================= */
+function boundedRiskEvent({riskKey, base=0, maxProb=.65}){
+  const r = clamp((STATE[riskKey]||0)+base,0,100);
+  return chance(Math.min(maxProb,r/140));
+}
+function resolveWaterStressLoss(){
+  const effectiveStress=clamp(STATE.waterStress,0,100);
+  const loss=Math.max(2,Math.round(Math.max(0,effectiveStress-20)*0.25));
+  add('productionPotential',-loss); STATE.cumulativeLoss += loss;
+  return `El déficit hídrico redujo parte del potencial productivo. La magnitud dependió de las capacidades previas y de la respuesta adoptada.`;
+}
+
+function resolvePestPressure(){
+  const pressure = 34 + rand()*22;
+  const effectiveRisk = clamp(STATE.pestRisk + pressure*0.35 - STATE.pestInfo*0.20);
+  if(chance(Math.min(.58,effectiveRisk/150))){
+    const loss = Math.round(4 + effectiveRisk*0.08);
+    add('productionPotential',-loss); STATE.cumulativeLoss += loss;
+    return `La presión de plagas se materializó parcialmente. La pérdida productiva fue limitada/modulada por la información y el manejo acumulados.`;
+  }
+  return `Hubo presión de plagas, pero no se materializó un daño importante en este ciclo. El riesgo existió aunque el evento no ocurriera.`;
+}
+function resolveHeatRisk(){
+  const p=Math.min(.5,STATE.heatExposure/150);
+  if(chance(p)){
+    add('operationalCapacity',-5); spend(2);
+    return `El calor generó una afectación operativa temporal. Las medidas preventivas modificaron la exposición, pero no podían garantizar riesgo cero.`;
+  }
+  return `No se produjo una afectación térmica relevante. La ausencia de un incidente no significa que la exposición fuera nula.`;
+}
+function resolveHarvestDamage(){
+  const handlingRisk = STATE.flags.harvestRisk ?? 35;
+  if(chance(Math.min(.7,handlingRisk/120))){
+    const loss=Math.round(STATE.producedProduct*(0.04+handlingRisk/800));
+    STATE.usableProduct=clamp(STATE.usableProduct-loss,0,100); STATE.cumulativeLoss+=loss;
+    return `Durante cosecha/manipulación se materializó daño físico y disminuyó el producto aprovechable.`;
+  }
+  return `La cosecha no presentó un daño físico relevante. La decisión modificó el riesgo, no garantizó el resultado.`;
+}
+function resolveFoodSafetyIncident(){
+  updateDerived();
+  const p=Math.min(.48,STATE.contaminationRisk/170);
+  if(chance(p)){
+    const baseLoss=8+Math.round(STATE.contaminationRisk*0.08);
+    const traceMitigation=Math.round(STATE.traceability*0.05);
+    const loss=Math.max(4,baseLoss-traceMitigation);
+    STATE.usableProduct=clamp(STATE.usableProduct-loss,0,100); STATE.cumulativeLoss+=loss; spend(Math.max(2,6-traceMitigation/3));
+    return `Se detectó un incidente de inocuidad limitado. La trazabilidad ayudó a acotar su alcance, pero no evitó que el incidente ocurriera.`;
+  }
+  return `No se materializó un incidente de inocuidad. Los controles redujeron exposición, pero no equivalían a “contaminación cero”.`;
+}
+function resolveEquipmentFailure(){
+  updateDerived();
+  const p=Math.min(.50,STATE.failureRisk/165);
+  if(chance(p)){
+    add('operationalCapacity',-10); add('equipmentCondition',-8); spend(4);
+    return `Bajo la presión operativa, un equipo presentó una falla que redujo temporalmente la capacidad. El mantenimiento previo moduló este riesgo.`;
+  }
+  return `El equipo soportó la presión sin una falla relevante. Posponer mantenimiento podía elevar exposición sin obligar a que el evento ocurriera.`;
+}
+
+/* =========================================================
+   ECONOMIC_ENGINE
+   ========================================================= */
+function computeFinalSales(){
+  updateDerived();
+  const product=STATE.sellablePotential;
+  const operationalFactor=clamp(STATE.operationalCapacity-STATE.operationalPressure*0.10,20,100);
+  const logisticsFactor=clamp(STATE.logisticsCapacity,10,100);
+
+  const baseCap=Math.min(product,STATE.baseDemand,operationalFactor,logisticsFactor);
+  let baseSales=Math.max(0,baseCap);
+  let remaining=Math.max(0,product-baseSales);
+
+  let extraEligible=0;
+  if(STATE.buyerMode==='full' && STATE.eligibility>=CONFIG.thresholds.buyerFull) extraEligible=STATE.acceptedExtraDemand;
+  if(STATE.buyerMode==='pilot' && STATE.eligibility>=CONFIG.thresholds.buyerPilot) extraEligible=Math.min(STATE.acceptedExtraDemand,24);
+
+  const residualCapacity=Math.max(0,operationalFactor-baseSales);
+  const residualLogistics=Math.max(0,logisticsFactor-baseSales);
+  let extraSales=Math.min(remaining,extraEligible,residualCapacity,residualLogistics);
+  if(STATE.flags.waitedDisruption) extraSales*=0.72;
+  if(STATE.flags.prioritizedDuringDisruption) extraSales*=0.86;
+
+  const revenue=baseSales*CONFIG.economics.basePrice + extraSales*CONFIG.economics.extraPrice;
+  STATE.flags.sales={base:Math.round(baseSales),extra:Math.round(extraSales),total:Math.round(baseSales+extraSales)};
+  earn(Math.round(revenue*CONFIG.economics.revenueScale)); // Escala pedagógica interna, no moneda real.
+}
+
+/* =========================================================
+   EVENTS
+   ========================================================= */
+function applyRoundEvent(round){
+  if(STATE.flags[`event${round}`]) return null;
+  STATE.flags[`event${round}`]=true;
+
+  if(round===2){
+    STATE.flags.inputCostMultiplier=1.18;
+    return {title:'Tu proveedor cambia la lista de precios',text:'Fertilizantes, algunos insumos de manejo y el transporte suben de precio por mayores costos de materias primas y fletes. No todos los gastos aumentan igual, pero el presupuesto del ciclo queda más apretado.'};
+  }
+  if(round===3){
+    const severity=64;
+    STATE.waterAvailability=clamp(STATE.waterAvailability-24);
+    const protection=STATE.soilCondition*0.10 + STATE.soilCover*0.10 + STATE.waterMgmt*0.22;
+    STATE.waterStress=clamp(20 + severity*0.60 - protection);
+    add('heatExposure',24);
+    return {title:'Varias semanas con menos lluvia y más calor',text:'La zona entra en un período seco más fuerte de lo esperado. El impacto no será igual para todos: la condición del suelo, el manejo del agua y las decisiones previas cambian cuánto estrés termina acumulando el cultivo.'};
+  }
+  if(round===4){
+    // Refuerzo formativo fijo para activar brecha conocimiento → implementación.
+    if(!STATE.trainingRefresh){ STATE.trainingRefresh=true; add('bpmKnowledge',10); }
+    const nutritionAdjustment=clamp((STATE.nutrientAdequacy-50)*0.25 + (STATE.nutrientEfficiency-42)*0.15,-8,8);
+    add('productionPotential',nutritionAdjustment);
+    STATE.producedProduct=clamp(STATE.productionPotential);
+    STATE.usableProduct=STATE.producedProduct;
+    return {title:'La cosecha llega casi junta',text:'Hay producto listo en campo, espacio limitado para acondicionarlo y pedidos que no pueden esperar demasiado. El equipo repasa los controles de higiene y manejo, pero aplicarlos bien también requiere tiempo, orden e infraestructura.'};
+  }
+  if(round===5){
+    STATE.extraDemand=24;
+    return {title:'Un distribuidor regional pide una reunión',text:'El comprador abastece pequeños comercios y servicios de alimentos. Le interesa tu producto, pero antes de comprar quiere ver registros, condiciones de manejo, consistencia y capacidad de entrega. Cumplir sus requisitos puede abrir la puerta; no garantiza una venta.'};
+  }
+  if(round===6){
+    STATE.extraDemand=46;
+    return {title:'La demanda crece de golpe',text:'Varios clientes de la zona buscan producto porque otros proveedores están entregando menos. El contacto comercial vuelve con una solicitud mucho mayor de lo habitual. La oportunidad aumenta, pero también la presión sobre procesos, personal y capacidad.'};
+  }
+  return null;
+}
+function triggerOperationalDisruption(){
+  if(STATE.disruption) return STATE.disruption;
+  STATE.disruption = rand()<0.5 ? 'electricidad' : 'logistica';
+  if(STATE.disruption==='electricidad'){
+    add('operationalCapacity',-14); add('contaminationRisk',7);
+    STATE.eventLog.push('La tormenta provocó un corte eléctrico que redujo temporalmente la capacidad de refrigeración y proceso.');
+  }else{
+    add('logisticsCapacity',-24);
+    STATE.eventLog.push('La tormenta afectó caminos y transporte, reduciendo temporalmente la capacidad de entrega.');
+  }
+  return STATE.disruption;
+}
+
+/* =========================================================
+   DECISIONS
+   Narrativa separada de la lógica causal.
+   ========================================================= */
+const DECISIONS=[
+  {id:'D1',round:1,title:'Con lo que tienes disponible, ¿qué fortaleces primero?',context:'Antes de comenzar el ciclo revisas tus cuentas y confirmas que el negocio está estable, pero no hay dinero suficiente para hacer todas las mejoras a la vez. Puedes invertir en proteger el suelo, mejorar el manejo del agua o guardar parte del dinero para responder a lo que aparezca después.',choices:[
+    {label:'Fortalecer suelo y cobertura',desc:'Invertir en cobertura, residuos y manejo físico básico.',cost:'Costo relativo: alto',apply(){spend(CONFIG.cost.HIGH);add('soilCover',24);schedule(3,{soilCondition:4},'La cobertura y el manejo sostenido empiezan a reflejarse lentamente en la condición del suelo.');schedule(5,{soilCondition:5},'La mejora del suelo continúa acumulándose con el tiempo.');return fb('Invertiste en suelo y cobertura. La caja baja hoy; la protección del suelo y su capacidad futura mejoran gradualmente.',[{t:'Liquidez',d:-12},{t:'Cobertura',d:+24}]);}},
+    {label:'Fortalecer gestión del agua',desc:'Invertir en eficiencia, distribución y capacidad de manejo del agua.',cost:'Costo relativo: alto',apply(){spend(CONFIG.cost.HIGH);add('waterMgmt',22);add('preparedness',4);return fb('Fortaleciste la gestión del agua. La inversión reduce caja, pero aumenta la capacidad de responder cuando el agua sea limitante.',[{t:'Liquidez',d:-12},{t:'Gestión de agua',d:+22}]);}},
+    {label:'Conservar liquidez',desc:'Mantener el manejo actual y reservar efectivo para decisiones posteriores.',cost:'Costo relativo: ninguno',apply(){add('cash',0);STATE.flags.savedCashEarly=true;return fb('Conservaste liquidez. Mantienes más opciones financieras futuras, aunque no fortaleciste suelo ni agua en este momento.',[{t:'Liquidez',d:0}]);}}
+  ]},
+  {id:'D2',round:1,title:'¿Qué haces con un equipo que empieza a dar señales de desgaste?',context:'La bomba y el equipo que apoyan parte del manejo y acondicionamiento todavía funcionan, pero en las últimas semanas han hecho ruidos y pequeñas pausas que antes no ocurrían. El técnico te dice que no hay una falla ahora, aunque recomienda revisar el sistema antes de que el ciclo se ponga más intenso.',choices:[
+    {label:'Mantenimiento preventivo completo',desc:'Atender el equipo antes de que presente una falla.',cost:'Costo relativo: medio',apply(){spend(10);add('equipmentCondition',16);add('failureRisk',-12);schedule(5,{equipmentCondition:4},'El mantenimiento preventivo conserva parte de su efecto en el tiempo.');return fb('Pagaste mantenimiento ahora. El equipo sigue funcionando, pero su exposición futura a falla es menor.',[{t:'Liquidez',d:-10},{t:'Condición del equipo',d:+16}]);}},
+    {label:'Revisión básica',desc:'Atender elementos urgentes y posponer el servicio completo.',cost:'Costo relativo: bajo',apply(){spend(5);add('equipmentCondition',7);add('failureRisk',-5);return fb('Hiciste una revisión parcial. Reduces parte de la exposición y conservas más caja que con un mantenimiento completo.',[{t:'Liquidez',d:-5},{t:'Condición del equipo',d:+7}]);}},
+    {label:'Posponer mantenimiento',desc:'Conservar el dinero y seguir operando mientras el equipo responda.',cost:'Costo relativo: ninguno',apply(){STATE.flags.maintenancePostponed=true;return fb('Conservaste caja y el equipo continúa operando. La exposición a una falla permanece más alta.',[{t:'Liquidez',d:0}]);}}
+  ]},
+  {id:'D3',round:2,title:'Con los insumos más caros, ¿cómo manejas la nutrición del cultivo?',context:'El proveedor te entrega una nueva cotización y el presupuesto ya no alcanza igual. Si mantienes el plan habitual gastarás más; si recortas sin información puedes dejar corto al cultivo. También puedes pagar un diagnóstico para ajustar mejor qué aplicar y dónde.',choices:[
+    {label:'Mantener el programa habitual',desc:'Seguir con el esquema usado normalmente.',cost:'Costo relativo: medio-alto',apply(){spend(10);add('nutrientAdequacy',2);add('nutrientEfficiency',2);return fb('Mantienes un manejo conocido, pero no obtienes nueva información para saber si la dosis está bien ajustada.',[{t:'Liquidez',d:-10},{t:'Eficiencia nutricional',d:+2}]);}},
+    {label:'Diagnosticar y ajustar',desc:'Invertir primero en información y usarla para decidir el manejo.',cost:'Costo relativo: medio',apply(){spend(6);add('nutrientDecisionQuality',22);STATE.flags.nutrientDiagnosis=true;schedule(3,{nutrientEfficiency:10,nutrientAdequacy:8},'El diagnóstico mejora el ajuste del manejo nutricional en el ciclo.');return fb('Invertiste en información. El diagnóstico no genera rendimiento por sí solo, pero mejora la calidad de decisiones posteriores.',[{t:'Liquidez',d:-6},{t:'Información nutricional',d:+22}]);}},
+    {label:'Reducir de forma general',desc:'Bajar el gasto en fertilización para proteger caja.',cost:'Costo relativo: bajo',apply(){spend(3);add('nutrientAdequacy',-9);add('cash',2);STATE.flags.blanketNutrientCut=true;return fb('Redujiste desembolso inmediato. La caja queda menos presionada, pero el ajuste no se basó en un diagnóstico y puede dejar necesidades sin cubrir.',[{t:'Liquidez',d:-1},{t:'Adecuación nutricional',d:-9}]);}}
+  ]},
+  {id:'D4',round:2,title:'¿Cómo respondes a las primeras señales de plagas?',context:'Después de varios días cálidos y cambios de humedad, notas daño leve en algunas hojas y aparecen insectos en puntos aislados. Dos productores cercanos comentan que también están viendo más presión. Aún no sabes si el problema crecerá o si quedará limitado.',choices:[
+    {label:'Aplicar control generalizado ahora',desc:'Intervenir rápidamente sin esperar más información.',cost:'Costo relativo: medio',apply(){spend(7);add('pestRisk',-9);add('pesticideExposure',8);return fb('Redujiste parte del riesgo de daño con una intervención temprana, a cambio de costo y mayor exposición asociada al uso de plaguicidas.',[{t:'Liquidez',d:-7},{t:'Riesgo de plaga',d:-9},{t:'Exposición química',d:+8}]);}},
+    {label:'Intensificar monitoreo',desc:'Observar mejor y decidir el control según lo encontrado.',cost:'Costo relativo: bajo',apply(){spend(3);add('pestInfo',26);add('pestRisk',-5);STATE.flags.pestMonitoring=true;return fb('Invertiste en información. El monitoreo no elimina la plaga, pero permite decisiones más ajustadas.',[{t:'Liquidez',d:-3},{t:'Información de plagas',d:+26}]);}},
+    {label:'Esperar daño visible',desc:'No gastar todavía y actuar solo si el problema se confirma.',cost:'Costo relativo: ninguno',apply(){add('pestRisk',7);return fb('Conservaste caja. A cambio, mantienes una exposición mayor a que el daño avance antes de intervenir.',[{t:'Riesgo de plaga',d:+7}]);}}
+  ],after(){STATE.eventLog.push(resolvePestPressure());}},
+  {id:'D5',round:3,title:'Con menos agua disponible, ¿cómo decides responder?',context:'Las lluvias siguen por debajo de lo esperado y el cultivo ya muestra señales de estrés en las horas más calientes. Todavía tienes acceso a agua, pero no con la misma holgura. Lo que hagas ahora tendrá que equilibrar producción, uso del recurso y dinero disponible.',choices:[
+    {label:'Incrementar recursos para sostener el manejo',desc:'Usar más recursos para intentar mantener el manejo habitual.',cost:'Costo relativo: alto',apply(){spend(10);const eff=STATE.waterAvailability>32?10:5;add('waterStress',-eff);add('waterMgmt',3);return fb('Destinaste más recursos a sostener el manejo. La respuesta reduce parte del estrés, limitada por el agua realmente disponible.',[{t:'Liquidez',d:-10},{t:'Estrés hídrico',d:-eff}]);}},
+    {label:'Usar el agua de forma selectiva',desc:'Priorizar momentos o áreas donde el agua disponible tenga mayor valor.',cost:'Costo relativo: medio',apply(){spend(5);add('waterMgmt',8);add('waterStress',-8);return fb('Ajustaste el manejo para utilizar el agua de forma más selectiva. Mejoras la capacidad de respuesta sin crear agua adicional.',[{t:'Liquidez',d:-5},{t:'Gestión de agua',d:+8},{t:'Estrés hídrico',d:-8}]);}},
+    {label:'Reducir gasto y aceptar mayor estrés',desc:'Proteger caja y tolerar temporalmente una mayor presión sobre el cultivo.',cost:'Costo relativo: ninguno',apply(){add('waterStress',10);STATE.flags.acceptedWaterStress=true;return fb('Protegiste caja, pero el cultivo queda más expuesto al déficit hídrico durante este período.',[{t:'Estrés hídrico',d:+10}]);}}
+  ],after(){STATE.eventLog.push(resolveWaterStressLoss());}},
+  {id:'D6',round:3,title:'¿Cómo organizas el trabajo cuando el calor empieza a pasar factura?',context:'A media mañana el calor ya es fuerte. El equipo tarda más en algunas tareas y varias personas comentan que las jornadas se sienten más pesadas. El trabajo debe continuar, pero mantener el mismo ritmo puede aumentar el riesgo para las personas y reducir el rendimiento del equipo.',choices:[
+    {label:'Mantener horario y ritmo',desc:'Evitar retrasos y conservar el ritmo operativo.',cost:'Costo relativo: ninguno',apply(){add('heatExposure',12);return fb('Conservaste capacidad inmediata, pero aumentó la exposición térmica del equipo.',[{t:'Exposición térmica',d:+12}]);}},
+    {label:'Pausas, hidratación y ajustes',desc:'Reducir exposición aunque se pierdan algunas horas efectivas.',cost:'Costo relativo: bajo',apply(){spend(2);add('heatExposure',-20);return fb('Redujiste exposición al calor. La medida protege al equipo, aunque disminuye algo la capacidad inmediata.',[{t:'Liquidez',d:-2},{t:'Exposición térmica',d:-20}]);}},
+    {label:'Reorganizar y contratar apoyo',desc:'Redistribuir tareas y sumar apoyo temporal para sostener capacidad.',cost:'Costo relativo: medio',apply(){spend(8);add('heatExposure',-13);return fb('Aumentaste capacidad y redujiste exposición mediante reorganización y apoyo, con mayor costo inmediato.',[{t:'Liquidez',d:-8},{t:'Exposición térmica',d:-13}]);}}
+  ],after(){STATE.eventLog.push(resolveHeatRisk());}},
+  {id:'D7',round:4,title:'Con varios lotes listos al mismo tiempo, ¿cómo organizas la cosecha?',context:'El producto está en su punto y una parte debe salir en pocos días. Si te atrasas, puede perder calidad; si aceleras demasiado, aumenta la posibilidad de golpes y daño durante la manipulación. Además, la mano de obra disponible es limitada.',choices:[
+    {label:'Priorizar velocidad',desc:'Mover más producto en menos tiempo.',cost:'Costo relativo: bajo',apply(){spend(2);STATE.flags.harvestRisk=58;return fb('Aumentaste velocidad y capacidad inmediata. También aumentó el riesgo de daño físico durante la manipulación.',[{t:'Liquidez',d:-2},{t:'Riesgo de daño',d:+1}]);}},
+    {label:'Priorizar manipulación cuidadosa',desc:'Usar más tiempo y mano de obra para reducir daño.',cost:'Costo relativo: medio',apply(){spend(6);STATE.flags.harvestRisk=20;return fb('Reduciste la exposición a daño físico, a cambio de más tiempo y recursos.',[{t:'Liquidez',d:-6},{t:'Riesgo de daño',d:-1}]);}},
+    {label:'Cosechar por etapas',desc:'Priorizar primero el producto más vulnerable y distribuir la capacidad.',cost:'Costo relativo: medio-bajo',apply(){spend(4);STATE.flags.harvestRisk=34;return fb('Distribuiste el trabajo por prioridades. Reduces parte del riesgo sin dedicar todos los recursos a la manipulación.',[{t:'Liquidez',d:-4},{t:'Riesgo de daño',d:0}]);}}
+  ],after(){STATE.eventLog.push(resolveHarvestDamage());}},
+  {id:'D8',round:4,title:'Con producto acumulándose y pedidos por preparar, ¿cómo manejas el empaque?',context:'El área de acondicionamiento empieza a llenarse. Tienes producto esperando, pedidos que salen al día siguiente y un equipo que ya viene cansado de la cosecha. Acelerar puede ayudarte a sacar más volumen, pero también puede hacer más difícil mantener todos los controles de higiene y proceso.',choices:[
+    {label:'Mantener controles BPM completos',desc:'Sostener limpieza, higiene, separación y controles operativos.',cost:'Costo relativo: medio',apply(){spend(6);add('bpmImplementation',12);add('bpmInfrastructure',4);STATE.processingShare=.92;return fb('Mantienes las barreras de inocuidad, aunque consumes tiempo y capacidad de proceso.',[{t:'Liquidez',d:-6},{t:'Implementación BPM',d:+12}]);}},
+    {label:'Simplificar temporalmente algunos pasos',desc:'Acelerar throughput reduciendo algunos controles.',cost:'Costo relativo: bajo',apply(){spend(1);add('bpmImplementation',-16);add('contaminationRisk',12);STATE.processingShare=.96;return fb('Aumentaste velocidad inmediata, pero debilitaste varias barreras de inocuidad y elevaste la exposición a incidentes.',[{t:'Liquidez',d:-1},{t:'Implementación BPM',d:-16}]);}},
+    {label:'Procesar menor volumen con controles completos',desc:'Mantener controles y aceptar que menos producto quede listo ahora.',cost:'Costo relativo: bajo',apply(){spend(2);add('bpmImplementation',7);STATE.processingShare=.76;return fb('Protegiste las barreras de inocuidad, pero reduces el volumen preparado para venta en este momento.',[{t:'Liquidez',d:-2},{t:'Implementación BPM',d:+7}]);}}
+  ],after(){STATE.sellablePotential=clamp(STATE.usableProduct*STATE.processingShare);STATE.eventLog.push(resolveFoodSafetyIncident());STATE.sellablePotential=clamp(Math.min(STATE.sellablePotential,STATE.usableProduct));}},
+  {id:'D9',round:5,title:'Después de lo vivido, ¿cómo planificas el próximo ciclo?',context:'Cierras un ciclo exigente y revisas qué funcionó, qué quedó vulnerable y dónde se concentraron tus riesgos. Ahora debes decidir si sigues con el mismo producto principal, cambias parte del esquema mediante rotación o diversificas una fracción de la producción.',choices:[
+    {label:'Repetir el producto principal',desc:'Concentrar recursos en el sistema ya conocido.',cost:'Costo relativo: bajo',apply(){spend(2);add('dependence',8);add('complexity',-3);return fb('Concentras recursos y mantienes menor complejidad, pero aumenta la dependencia de un solo producto.',[{t:'Liquidez',d:-2},{t:'Dependencia',d:+8}]);}},
+    {label:'Introducir rotación parcial',desc:'Cambiar parte del esquema para el siguiente ciclo.',cost:'Costo relativo: medio-bajo',apply(){spend(4);schedule(6,{soilCondition:5,pestRisk:-4},'La rotación parcial empieza a modificar condiciones agronómicas del siguiente ciclo.');return fb('Asumes un ajuste ahora para modificar condiciones del siguiente ciclo. El efecto no es inmediato.',[{t:'Liquidez',d:-4}]);}},
+    {label:'Diversificar parte de la producción',desc:'Reducir la dependencia de un único producto a costa de mayor complejidad.',cost:'Costo relativo: medio',apply(){spend(6);add('diversification',22);add('dependence',-22);add('complexity',12);return fb('Redujiste dependencia de un solo producto, pero aumentaste la complejidad de gestión.',[{t:'Liquidez',d:-6},{t:'Diversificación',d:+22},{t:'Complejidad',d:+12}]);}}
+  ]},
+  {id:'D10',round:5,title:'El distribuidor quiere avanzar, ¿cómo respondes?',context:'Después de la reunión, el distribuidor te dice que podría comenzar a comprarte si demuestras registros básicos, controles consistentes y capacidad para entregar a tiempo. Adecuarte por completo cuesta más; también puedes mantener tus canales actuales o proponer una prueba pequeña antes de comprometerte.',choices:[
+    {label:'Adecuarse para intentar cumplir requisitos',desc:'Invertir en registros, controles e infraestructura para buscar elegibilidad.',cost:'Costo relativo: alto',apply(){spend(12);add('traceability',18);add('bpmInfrastructure',12);add('eligibility',38);add('preparedness',8);STATE.buyerMode='full';return fb('Aumentaste tu capacidad de cumplir requisitos y la elegibilidad potencial. La venta todavía depende de producto, demanda, operación y logística.',[{t:'Liquidez',d:-12},{t:'Trazabilidad',d:+18},{t:'Elegibilidad',d:+38}]);}},
+    {label:'Mantener canales actuales',desc:'No comprometer recursos adicionales todavía.',cost:'Costo relativo: ninguno',apply(){STATE.buyerMode='none';return fb('Conservaste recursos y tus canales actuales. No asumes el costo de adecuación, pero el nuevo canal sigue limitado.',[{t:'Liquidez',d:0}]);}},
+    {label:'Negociar un volumen piloto',desc:'Hacer ajustes selectivos y probar con un volumen pequeño antes de comprometer toda la operación.',cost:'Costo relativo: medio-bajo',apply(){spend(4);add('traceability',9);add('bpmInfrastructure',5);add('eligibility',22);add('preparedness',6);STATE.buyerMode='pilot';return fb('Abriste una vía gradual con un compromiso financiero menor. El piloto mejora registros y preparación sin exigir todavía la inversión completa; la venta futura sigue dependiendo de capacidad y cumplimiento.',[{t:'Liquidez',d:-4},{t:'Trazabilidad',d:+9},{t:'Elegibilidad',d:+22}]);}}
+  ]},
+  {id:'D11',round:6,title:'Te ofrecen un pedido mucho mayor de lo habitual, ¿cuánto aceptas?',context:()=>STATE.buyerMode==='pilot'?'El volumen piloto abrió conversación con el comprador y ahora te pregunta si puedes atender un pedido mayor. Tienes una oportunidad de crecer, pero todavía estás probando qué tan bien responde tu operación.':STATE.buyerMode==='full'?'El distribuidor considera que ya cumples los requisitos básicos y propone un pedido mucho mayor de lo habitual. El ingreso potencial es atractivo, pero el volumen pondrá a prueba equipos, personal y logística.':'El distribuidor vuelve a contactarte porque necesita producto con urgencia. Como no hiciste las adecuaciones anteriores, la oportunidad existe, pero todavía tienes pendientes requisitos y capacidad que pueden limitar cuánto realmente podrás entregar.',choices:[
+    {label:'Aceptar todo el volumen solicitado',desc:'Maximizar la oportunidad comercial potencial.',cost:'Presión operativa: alta',apply(){STATE.acceptedExtraDemand=STATE.extraDemand;return fb('Aceptaste todo el pedido. Aumenta la venta potencial y también la presión sobre el sistema.',[{t:'Demanda aceptada',d:+46},{t:'Presión operativa',d:+20}]);}},
+    {label:'Aceptar solo un volumen manejable',desc:'Limitar el pedido a una fracción compatible con la capacidad actual.',cost:'Presión operativa: media',apply(){STATE.acceptedExtraDemand=Math.round(STATE.extraDemand*.55);return fb('Limitaste el pedido para reducir sobrecarga. Renuncias a parte del ingreso potencial, pero proteges capacidad.',[{t:'Demanda aceptada',d:+25},{t:'Presión operativa',d:+8}]);}},
+    {label:'Mantener compromisos actuales',desc:'No aceptar el pedido extraordinario.',cost:'Presión operativa: baja',apply(){STATE.acceptedExtraDemand=0;return fb('Proteges la operación actual y dejas pasar la oportunidad extraordinaria.',[{t:'Demanda extra',d:0},{t:'Presión operativa',d:-5}]);}}
+  ],after(){STATE.eventLog.push(resolveEquipmentFailure());const d=triggerOperationalDisruption();STATE.flags.disruptionRevealed=true;STATE.eventLog.push(d==='electricidad'?'Una tormenta tropical cercana provocará una interrupción eléctrica en la siguiente decisión.':'Una tormenta tropical cercana complicará caminos y transporte en la siguiente decisión.');}},
+  {id:'D12',round:6,title:'Una tormenta tropical complica la operación',context:()=>STATE.disruption==='electricidad'?'Una tormenta tropical pasa cerca de la zona y provoca cortes de electricidad. Tu finca no sufrió daños graves, pero el área de acondicionamiento pierde energía y parte del producto depende de que el proceso se restablezca pronto.':'Una tormenta tropical pasa cerca de la zona y deja caminos afectados y retrasos en transporte. Tu producción está disponible, pero los vehículos no pueden moverse con normalidad y varias entregas quedan en riesgo.',choices:[
+    {label:'Financiar una solución extraordinaria',desc:'Pagar una respuesta inmediata para recuperar capacidad.',cost:'Costo relativo: alto',apply(){spend(12);if(STATE.disruption==='electricidad'){add('operationalCapacity',15);add('contaminationRisk',-4)}else{add('logisticsCapacity',24)}add('preparedness',3);return fb('Usaste caja para recuperar capacidad rápidamente. La solución protege parte de la operación, pero tiene un costo financiero inmediato.',[{t:'Liquidez',d:-12},{t:'Capacidad recuperada',d:+15}]);}},
+    {label:'Priorizar lotes y clientes críticos',desc:'Aceptar que no todo podrá atenderse y proteger lo más importante.',cost:'Costo relativo: medio-bajo',apply(){spend(4);STATE.flags.prioritizedDuringDisruption=true;if(STATE.disruption==='electricidad'){add('operationalCapacity',7);add('contaminationRisk',-3)}else{add('logisticsCapacity',11)}add('traceability',3);return fb('Priorizaste recursos para proteger lo crítico. Parte de la oportunidad se reduce, pero evitas intentar sostener todo el sistema bajo presión.',[{t:'Liquidez',d:-4},{t:'Respuesta focalizada',d:+1}]);}},
+    {label:'Esperar la recuperación normal',desc:'Conservar caja y tolerar una interrupción más prolongada.',cost:'Costo relativo: ninguno',apply(){STATE.flags.waitedDisruption=true;if(STATE.disruption==='electricidad'){add('contaminationRisk',7);STATE.sellablePotential=clamp(STATE.sellablePotential-7)}else{add('logisticsCapacity',-8)}return fb('Conservaste caja, pero aumentó el tiempo de exposición al deterioro o retraso.',[{t:'Liquidez',d:0},{t:'Exposición operativa',d:+1}]);}}
+  ],after(){computeFinalSales();STATE.finished=true;}}
+];
+
+// Costos de caja centralizados para activar el gate de liquidez en la interfaz.
+const CHOICE_COSTS={
+  D1:[12,12,0], D2:[10,5,0], D3:[10,6,3], D4:[7,3,0],
+  D5:[10,5,0], D6:[0,2,8], D7:[2,6,4], D8:[6,1,2],
+  D9:[2,4,6], D10:[12,0,4], D11:[0,0,0], D12:[12,4,0]
+};
+DECISIONS.forEach(d=>d.choices.forEach((c,i)=>c.cashCost=(CHOICE_COSTS[d.id]||[])[i]||0));
+
+function fb(text,deltas=[]){return {text,deltas};}
+
+/* =========================================================
+   PROFILE_ENGINE — v1.3
+   ========================================================= */
+function derivedResilience(){
+  return clamp(0.18*STATE.soilCondition+0.18*STATE.waterMgmt+0.16*STATE.preparedness+0.16*STATE.equipmentCondition+0.14*STATE.cash+0.10*(100-STATE.dependence)+0.08*STATE.traceability);
+}
+function currentBusinessScore(){ return clamp(STATE.businessResult+50); }
+function profileResult(){
+  const res=derivedResilience();
+  const econ=STATE.businessResult;
+  const exposure=(STATE.failureRisk+STATE.contaminationRisk+STATE.waterStress+STATE.heatExposure)/4;
+  const solid = res>=56 && STATE.cash>=52 && STATE.foodSafety>=65 && STATE.productiveResources>=53 &&
+                STATE.operationalSafety>=66 && STATE.equipmentCondition>=58 && STATE.operationalPressure<=55 &&
+                STATE.cumulativeLoss<=14 && econ>=-10;
+  const matches=[];
+  if(solid) matches.push('Sólida y adaptable');
+  if(STATE.operationalPressure>48 && (STATE.flags.sales?.extra||0)>5) matches.push('Crecimiento bajo presión');
+  if(res>53 && STATE.cash<48) matches.push('Preparada pero con presión de caja');
+  if(STATE.diversification>34 && res>50) matches.push('Diversificada y adaptable');
+  if(STATE.foodSafety>66 && STATE.equipmentCondition>60 && STATE.eligibility<52) matches.push('Operativamente sólida, comercialmente limitada');
+  if(econ>22 && exposure>39) matches.push('Rentable pero expuesta');
+  const name=matches[0]||'Equilibrio operativo';
+  const secondary=matches.find(x=>x!==name)||null;
+
+  const strengths=[]; const vulnerabilities=[];
+  if(STATE.soilCondition>52||STATE.waterMgmt>55) strengths.push('Tienes mejores condiciones para responder cuando el agua o el clima se vuelven difíciles.');
+  if(STATE.traceability>55) strengths.push('Tus registros ayudan a ubicar problemas y responder con más orden.');
+  if(STATE.foodSafety>65) strengths.push('Los controles para cuidar la seguridad del producto quedaron relativamente fuertes.');
+  if(STATE.equipmentCondition>62) strengths.push('El estado de los equipos te deja con una operación más preparada.');
+  if(STATE.cash>42) strengths.push('Conservaste suficiente dinero disponible para mantener opciones de respuesta.');
+  if((STATE.flags.sales?.extra||0)>0) strengths.push('Lograste convertir parte de una oportunidad comercial en ventas reales.');
+
+  if(STATE.cash<28) vulnerabilities.push('El dinero disponible quedó muy ajustado para responder a un nuevo problema.');
+  if(STATE.waterStress>45) vulnerabilities.push('El negocio todavía es sensible a períodos con poca agua.');
+  if(STATE.contaminationRisk>42) vulnerabilities.push('Los controles de higiene y manejo del producto necesitan fortalecerse.');
+  if(STATE.failureRisk>42) vulnerabilities.push('El equipo sigue con un riesgo operativo que merece atención.');
+  if(STATE.operationalPressure>62) vulnerabilities.push('El volumen y la complejidad están presionando demasiado la capacidad del negocio.');
+  if(STATE.eligibility<52) vulnerabilities.push('El nuevo canal comercial sigue limitado por requisitos o capacidad.');
+  if(strengths.length===0) strengths.push('La agroempresa logró mantenerse funcionando y adaptarse durante el recorrido.');
+  if(vulnerabilities.length===0) vulnerabilities.push('Todavía existen riesgos residuales: ninguna combinación de decisiones elimina por completo la incertidumbre.');
+  return {name,secondary,res:Math.round(res),strengths,vulnerabilities};
+}
+
+/* =========================================================
+   RENDERING — UX v1.3
+   ========================================================= */
+const $=s=>document.querySelector(s);
+const intro=$('#intro'), game=$('#game'), end=$('#end'), decisionPanel=$('#decisionPanel'), eventArea=$('#eventArea');
+
+const ROUND_STORIES={
+  1:{title:'Antes de que empiece el ciclo',copy:'Faltan pocas semanas para iniciar la siembra. El ciclo anterior te permitió mantener el negocio en pie, pero no dejó dinero de sobra. Además, en las reuniones de productores se habla de una temporada más seca de lo normal. No puedes invertir en todo: lo que fortalezcas ahora puede darte más margen después.'},
+  2:{title:'Los costos empiezan a subir',copy:'El ciclo ya está en marcha. Tu proveedor te avisa que fertilizantes, algunos productos de manejo y transporte llegarán más caros por aumentos en materias primas y fletes. Para una agroempresa pequeña, el cambio se siente rápido: cada peso que gastas en una cosa deja menos margen para otra.'},
+  3:{title:'El agua empieza a faltar',copy:'Han pasado varias semanas con lluvia por debajo de lo esperado y las tardes están más calientes. En este escenario, los reportes meteorológicos relacionan el patrón seco con El Niño. Las fuentes de agua siguen funcionando, pero con menos holgura, y el cultivo empieza a mostrar señales de estrés.'},
+  4:{title:'La cosecha pone a prueba tus procesos',copy:'Después de un ciclo exigente, varios lotes llegan al punto de cosecha casi al mismo tiempo. Parte del producto no puede esperar muchos días sin perder calidad. Ahora la presión cambia: ya no basta producir; también debes cosechar, manipular y preparar el producto sin perder lo que lograste sacar del campo.'},
+  5:{title:'Aparece una oportunidad',copy:'Termina el ciclo y empiezas a planificar el siguiente. Tus resultados llamaron la atención de un distribuidor regional que abastece pequeños comercios y servicios de alimentos. La oportunidad puede abrir un nuevo canal, pero también exige consistencia, registros y capacidad de entrega.'},
+  6:{title:'Tu negocio está bajo presión',copy:'La temporada comercial se mueve rápido. Algunos proveedores de la zona están entregando menos volumen y varios compradores buscan alternativas. Tu agroempresa recibe más consultas de lo habitual. Es una oportunidad, pero crecer de golpe puede exigir más de tus equipos, tu gente y tus procesos.'}
+};
+const DISPLAY_TITLES={D12:'¿Cómo respondes ahora?'};
+const FUTURE_HINTS={
+  D1:'Esta decisión puede cambiar cuánto margen de respuesta tendrás cuando aparezcan condiciones difíciles.',
+  D2:'El estado del equipo puede volver a importar cuando la operación tenga más carga.',
+  D3:'La calidad de la información puede influir después en qué tan ajustado resulta el manejo nutricional.',
+  D4:'El riesgo de plagas puede cambiar más adelante según la información y el manejo que hayas construido.',
+  D5:'La respuesta de hoy cambia cuánto estrés termina acumulando el cultivo durante este período.',
+  D6:'Proteger al equipo humano puede sostener la capacidad de trabajo cuando el calor continúa.',
+  D7:'El cuidado durante la cosecha influye en cuánto producto termina realmente aprovechable.',
+  D8:'Los controles de higiene reducen riesgo; no garantizan que nunca ocurra un problema.',
+  D9:'Los cambios de rotación o diversificación necesitan tiempo antes de mostrar parte de sus efectos.',
+  D10:'Cumplir requisitos abre una posibilidad comercial, pero todavía hacen falta producto, demanda y capacidad de entrega.',
+  D11:'Aceptar más volumen puede aumentar simultáneamente la oportunidad y la presión sobre el negocio.',
+  D12:'La respuesta a una contingencia protege unas cosas a cambio de usar dinero, tiempo o capacidad en otras.'
+};
+const DELTA_NAMES={
+  'Liquidez':'Dinero disponible','Cobertura':'Protección del suelo','Gestión de agua':'Manejo del agua','Condición del equipo':'Estado del equipo',
+  'Eficiencia nutricional':'Uso eficiente de nutrientes','Información nutricional':'Información para nutrir','Adecuación nutricional':'Ajuste de nutrientes',
+  'Riesgo de plaga':'Riesgo por plagas','Exposición química':'Exposición a agroquímicos','Estrés hídrico':'Estrés por falta de agua','Exposición térmica':'Riesgo por calor',
+  'Riesgo de daño':'Riesgo de daño del producto','Implementación BPM':'Controles de higiene y proceso','Dependencia':'Dependencia de un producto',
+  'Diversificación':'Diversificación','Complejidad':'Complejidad de la operación','Trazabilidad':'Registros y trazabilidad','Elegibilidad':'Posibilidad de entrar al canal',
+  'Demanda aceptada':'Pedido aceptado','Presión operativa':'Presión sobre el negocio','Capacidad recuperada':'Capacidad de operación','Respuesta focalizada':'Capacidad para priorizar',
+  'Exposición operativa':'Riesgo operativo','Demanda extra':'Pedido adicional'
+};
+function friendlyText(s=''){
+  return String(s)
+   .replace(/liquidez/gi,'dinero disponible')
+   .replace(/inocuidad/gi,'seguridad del producto')
+   .replace(/BPM/g,'controles de higiene y proceso')
+   .replace(/throughput/gi,'velocidad de proceso')
+   .replace(/elegibilidad potencial/gi,'posibilidad de cumplir los requisitos del comprador')
+   .replace(/elegibilidad/gi,'posibilidad de acceso al canal')
+   .replace(/estrés hídrico/gi,'estrés por falta de agua');
+}
+function friendlyCost(s=''){
+  if(/alto/i.test(s)&&/presión/i.test(s)) return 'Puede aumentar mucho la carga de trabajo';
+  if(/media/i.test(s)&&/presión/i.test(s)) return 'Puede aumentar la carga de trabajo';
+  if(/baja/i.test(s)&&/presión/i.test(s)) return 'Mantiene baja la carga adicional';
+  if(/ninguno/i.test(s)) return 'No requiere dinero adicional ahora';
+  if(/medio-alto/i.test(s)) return 'Necesita bastante dinero ahora';
+  if(/alto/i.test(s)) return 'Necesita bastante dinero ahora';
+  if(/medio-bajo/i.test(s)) return 'Necesita poco dinero ahora';
+  if(/medio/i.test(s)) return 'Necesita algo de dinero ahora';
+  if(/bajo/i.test(s)) return 'Necesita poco dinero ahora';
+  return friendlyText(s);
+}
+function getCurrentDecision(){ return DECISIONS[STATE.decisionIndex]; }
+function roundDecisionCount(round){return DECISIONS.filter(d=>d.round===round).length;}
+function currentDecisionNumberInRound(){const d=getCurrentDecision();return DECISIONS.slice(0,STATE.decisionIndex+1).filter(x=>x.round===d.round).length;}
+function choiceFor(id){const x=STATE.history.find(h=>h.id===id);return x?x.choice:'';}
+function indicatorStatus(v){return v>=75?'Fuerte':v>=60?'Estable':v>=45?'Atención':'Presión';}
+function indicatorItems(){
+  updateDerived();
+  const product=STATE.round<4?STATE.productionPotential:(STATE.usableProduct||STATE.productionPotential);
+  return [
+    ['Dinero disponible',STATE.cash],['Resultado del negocio',currentBusinessScore()],['Producción y operación',product],
+    ['Suelo y agua',STATE.productiveResources],['Seguridad del producto',STATE.foodSafety],['Equipo de trabajo',STATE.operationalSafety]
+  ];
+}
+function renderStats(){
+  $('#stats').innerHTML=indicatorItems().map(([n,v])=>`<div class="mini-stat"><div class="mini-stat-head"><span>${n}</span><span class="mini-status">${indicatorStatus(v)}</span></div><div class="mini-bar"><i class="${v<48?'attn':''}" style="width:${clamp(v)}%"></i></div></div>`).join('');
+}
+function renderRounds(){
+  $('#roundBadge').textContent=`RONDA ${STATE.round}`;
+  $('#roundList').innerHTML=CONFIG.roundNames.map((n,i)=>{const r=i+1;return `<span class="progress-dot ${r<STATE.round?'done':''} ${r===STATE.round?'active':''}" title="${r}. ${n}"></span>`}).join('');
+}
+function contextualSignals(){
+  const s=[];
+  if(STATE.cash<35) s.push('Dinero disponible ajustado');
+  if(STATE.waterStress>45) s.push('Cultivo bajo presión por falta de agua');
+  if(STATE.operationalPressure>58) s.push('Operación con mucha carga');
+  if(STATE.contaminationRisk>42) s.push('Controles del producto bajo presión');
+  if(STATE.failureRisk>43) s.push('Equipo con mayor riesgo de falla');
+  if(STATE.eligibility>=52) s.push('Hay una posibilidad comercial abierta');
+  return s.slice(0,2);
+}
+function renderSignals(){const s=contextualSignals();$('#signals').innerHTML=s.map(x=>`<span class="signal">${x}</span>`).join('');}
+function renderHistory(){
+  const h=$('#history');
+  if(!STATE.history.length){h.innerHTML='<div>Tus decisiones aparecerán aquí.</div>';return;}
+  h.innerHTML=STATE.history.slice().reverse().map(x=>`<div class="history-item"><b>Ronda ${x.round}</b>${friendlyText(x.choice)}</div>`).join('');
+}
+function renderEvent(evt){eventArea.innerHTML=evt?`<div class="event-card"><strong>${friendlyText(evt.title)}</strong><div>${friendlyText(evt.text)}</div></div>`:'';}
+function ensureRoundEvent(round){
+  const key=`eventData${round}`;
+  if(STATE.flags[key]!==undefined) return STATE.flags[key];
+  const evt=applyRoundEvent(round);
+  STATE.flags[key]=evt||null;
+  return STATE.flags[key];
+}
+function stageEcho(round){
+  if(round===3){
+    const c=choiceFor('D1');
+    if(/agua/i.test(c)) return 'El manejo del agua que fortaleciste al inicio vuelve a importar ahora: no crea agua, pero cambia tu capacidad para responder.';
+    if(/suelo/i.test(c)) return 'La protección del suelo que elegiste al inicio empieza a influir en cómo el cultivo enfrenta este período difícil.';
+    if(/liquidez/i.test(c)) return 'El dinero que decidiste conservar al inicio te deja hoy con más margen para financiar una respuesta.';
+  }
+  if(round===4){
+    if(choiceFor('D3')) return 'Las decisiones anteriores sobre nutrición y plagas ya están influyendo en el potencial de cosecha. No todo el efecto se veía cuando las tomaste.';
+  }
+  if(round===5){
+    if(choiceFor('D8')) return 'Lo que hiciste al cosechar y procesar determinó cuánto producto quedó realmente aprovechable para una oportunidad de venta.';
+  }
+  if(round===6){
+    const bits=[];
+    if(choiceFor('D2')) bits.push('el estado del equipo');
+    if(choiceFor('D10')) bits.push('los requisitos y registros del comprador');
+    if(bits.length) return `Ahora vuelven a importar ${bits.join(' y ')}. La oportunidad no depende solo de tener demanda.`;
+  }
+  return '';
+}
+function renderStageIntro(round,evt){
+  const s=ROUND_STORIES[round];const echo=stageEcho(round);
+  eventArea.innerHTML='';
+  decisionPanel.innerHTML=`<section class="stage-screen"><div class="eyebrow">RONDA ${round} · ${CONFIG.roundNames[round-1]}</div><h1 class="stage-title">${s.title}</h1><p class="stage-copy">${s.copy}</p>${evt?`<div class="stage-event"><b>${friendlyText(evt.title)}</b><div>${friendlyText(evt.text)}</div></div>`:''}${echo?`<div class="past-echo"><b>Una decisión anterior vuelve a importar</b><div>${echo}</div></div>`:''}<button class="btn wide" id="beginRound">Ver la primera decisión</button></section>`;
+  $('#beginRound').addEventListener('click',()=>{STATE.flags[`introSeen${round}`]=true;renderDecision();});
+}
+function deltaClass(label,d){
+  const risky=/riesgo|exposición|estrés|presión|dependencia|complejidad/i.test(label);
+  if(d===0) return '';
+  if((risky&&d>0)||(!risky&&d<0)) return 'trade';
+  return '';
+}
+function deltaChip(x){
+  const label=DELTA_NAMES[x.t]||friendlyText(x.t);const arrow=x.d>0?'↑':x.d<0?'↓':'↔';
+  return `<span class="delta ${deltaClass(label,x.d)}">${label} ${arrow}</span>`;
+}
+function renderDecision(){
+  if(STATE.finished){renderEnd();return;}
+  const d=getCurrentDecision();
+  if(!d){STATE.finished=true;renderEnd();return;}
+  if(STATE.round!==d.round){STATE.round=d.round;applyDueDelays(STATE.round);}
+  const evt=ensureRoundEvent(STATE.round);
+  renderStats();renderRounds();renderSignals();renderHistory();updateDebug();
+  if(!STATE.flags[`introSeen${STATE.round}`]){renderStageIntro(STATE.round,evt);return;}
+
+  const ctx=typeof d.context==='function'?d.context():d.context;
+  if(d.id==='D12'){
+    const title=STATE.disruption==='electricidad'?'Evento inesperado: la tormenta corta la electricidad':'Evento inesperado: la tormenta complica los caminos';
+    renderEvent({title,text:ctx});
+  }else renderEvent(null);
+  const title=DISPLAY_TITLES[d.id]||d.title;
+  decisionPanel.innerHTML=`<section class="decision-screen"><div class="eyebrow">RONDA ${d.round} · ${CONFIG.roundNames[d.round-1]} · DECISIÓN ${currentDecisionNumberInRound()} DE ${roundDecisionCount(d.round)}</div><div class="decision-card"><h2>${friendlyText(title)}</h2>${d.id==='D12'?'':`<p class="decision-context">${friendlyText(ctx)}</p>`}<div class="choice-grid">${d.choices.map((c,i)=>{const locked=STATE.cash<c.cashCost;return `<button class="choice" data-choice="${i}" ${locked?'disabled':''}><strong>${friendlyText(c.label)}</strong><small>${friendlyText(c.desc)}</small><span class="choice-cost">${friendlyCost(c.cost)}${locked?' · No disponible con el dinero actual':''}</span></button>`}).join('')}</div></div></section>`;
+  decisionPanel.querySelectorAll('[data-choice]').forEach(btn=>btn.addEventListener('click',()=>choose(Number(btn.dataset.choice))));
+}
+function choose(i){
+  const d=getCurrentDecision();const c=d.choices[i];
+  if(STATE.cash<c.cashCost)return;
+  const logStart=STATE.eventLog.length;
+  const feedback=c.apply();updateDerived();
+  STATE.history.push({round:d.round,id:d.id,choice:c.label});
+  if(d.after)d.after();updateDerived();
+  const newLogs=STATE.eventLog.slice(logStart);
+  renderStats();renderSignals();renderHistory();updateDebug();renderEvent(null);
+  const deltaHtml=(feedback.deltas||[]).map(deltaChip).join('');
+  const events=newLogs.length?`<div class="result-event"><h3>También ocurrió</h3>${newLogs.map(x=>`<p>${friendlyText(x)}</p>`).join('')}</div>`:'';
+  decisionPanel.innerHTML=`<section class="feedback-screen"><div class="eyebrow">RONDA ${d.round} · ${CONFIG.roundNames[d.round-1]}</div><p class="chosen">Elegiste: <b>${friendlyText(c.label)}</b></p>${deltaHtml?`<div class="delta-row">${deltaHtml}</div>`:''}<div class="meaning-box"><h3>¿Qué significa esta decisión?</h3><p>${friendlyText(feedback.text)}</p></div>${events}<div class="future-box"><h3>Más adelante</h3><p>${FUTURE_HINTS[d.id]}</p></div><button class="btn wide" id="nextBtn">Continuar</button></section>`;
+  $('#nextBtn').addEventListener('click',()=>{STATE.decisionIndex++;const next=DECISIONS[STATE.decisionIndex];if(next&&next.round!==STATE.round){STATE.round=next.round;applyDueDelays(STATE.round);}window.scrollTo({top:0,behavior:'smooth'});renderDecision();});
+}
+function profileDescription(name){
+  const d={
+    'Sólida y adaptable':'Tu negocio terminó con un equilibrio favorable: tiene capacidad para responder, riesgos importantes relativamente controlados y suficiente margen para seguir tomando decisiones. No significa que todo esté perfecto ni que hayas ganado más dinero que todas las demás trayectorias.',
+    'Crecimiento bajo presión':'Lograste abrir oportunidades, pero el crecimiento está exigiendo mucho de tus procesos, equipos o personas. El reto es que vender más no termine debilitando el negocio.',
+    'Preparada pero con presión de caja':'Construiste varias capacidades útiles, pero el dinero disponible quedó ajustado. La prevención ayuda, aunque también necesita sostenerse financieramente.',
+    'Diversificada y adaptable':'Reduciste parte de la dependencia de un solo producto y construiste capacidad para adaptarte, aunque manejar más frentes también agrega complejidad.',
+    'Operativamente sólida, comercialmente limitada':'Los procesos y controles quedaron relativamente fuertes, pero todavía existen barreras para convertir esa solidez en nuevas ventas.',
+    'Rentable pero expuesta':'El resultado económico fue favorable, pero permanecen riesgos que podrían complicar un próximo ciclo. Ganar hoy no significa estar igualmente protegido mañana.',
+    'Equilibrio operativo':'Tu agroempresa terminó con fortalezas y tensiones repartidas. No domina una sola dimensión y todavía hay espacio para decidir qué conviene fortalecer.'
+  };return d[name]||'';
+}
+function causalEchoes(){
+  const out=[];
+  const d1=choiceFor('D1');if(d1) out.push({t:'La primera decisión siguió presente',x:/liquidez/i.test(d1)?'Conservar dinero te dejó más margen para responder después, aunque mantuviste capacidades productivas menos fortalecidas.':/agua/i.test(d1)?'La inversión inicial en manejo del agua cambió tu capacidad para responder cuando apareció el déficit.':'La inversión inicial en suelo comenzó a mostrar su valor cuando las condiciones se hicieron más difíciles.'});
+  const d2=choiceFor('D2');if(d2) out.push({t:'El mantenimiento no era solo un gasto',x:/Posponer/i.test(d2)?'Conservar dinero mantuvo un riesgo de falla más alto cuando aumentó la presión de la operación.':'El estado del equipo ayudó a modificar el riesgo cuando la operación estuvo bajo presión.'});
+  if(/Diagnosticar/i.test(choiceFor('D3'))) out.push({t:'La información tuvo un efecto después',x:'El diagnóstico no dio rendimiento automáticamente; primero mejoró la calidad del manejo y luego influyó en el potencial productivo.'});
+  if(choiceFor('D10')) out.push({t:'Tener comprador no era suficiente',x:'La oportunidad comercial dependió también de requisitos, producto disponible, capacidad y logística.'});
+  return out.slice(0,4);
+}
+function systemLessons(){
+  const a=[];
+  if(STATE.businessResult>15&&derivedResilience()<53) a.push('Un buen resultado económico puede convivir con vulnerabilidades importantes para el siguiente ciclo.');
+  else a.push('El resultado económico surgió de ventas, costos y pérdidas; ninguna práctica individual entregó dinero por sí sola.');
+  a.push('Reducir un riesgo no significó eliminarlo: algunas buenas decisiones podían no producir un “premio” visible de inmediato.');
+  if(STATE.operationalPressure>48) a.push('La oportunidad de vender más también aumentó la presión sobre el sistema.');
+  else a.push('Limitar o ajustar una oportunidad puede ser una forma de proteger la capacidad del negocio.');
+  if(STATE.cash>60) a.push('Conservar dinero disponible mantuvo opciones abiertas para responder, pero no reemplazó las capacidades productivas u operativas.');
+  return a.slice(0,4);
+}
+function metricHtml(label,score){return `<div class="metric-row"><b>${label}</b><span class="metric-status">${indicatorStatus(score)}</span><div class="metric-bar"><i style="width:${clamp(score)}%"></i></div></div>`;}
+function renderEnd(){
+  game.classList.add('hidden');end.classList.remove('hidden');$('#restartTop').classList.remove('hidden');
+  const p=profileResult();const sales=STATE.flags.sales||{base:0,extra:0,total:0};
+  const product=clamp(STATE.sellablePotential||STATE.usableProduct||STATE.productionPotential);
+  const echoes=causalEchoes();const lessons=systemLessons();
+  const allDecisions=STATE.history.map(x=>`<li><b>Ronda ${x.round}:</b> ${friendlyText(x.choice)}</li>`).join('');
+  end.innerHTML=`<div class="end-banner"><div class="profile-kicker">Así quedó tu agroempresa</div><h1>${p.name}</h1><p>${profileDescription(p.name)}</p>${p.secondary?`<p style="margin-top:12px;font-size:14px;color:#dcebe2"><b>También aparecen rasgos de:</b> ${p.secondary}.</p>`:''}</div><div class="end-body">
+    <div class="end-section"><h2>Hoy y mañana no son lo mismo</h2><div class="today-tomorrow"><div class="horizon-card"><h3>Cómo quedó el negocio hoy</h3><div class="metric-list">${metricHtml('Dinero disponible',STATE.cash)}${metricHtml('Resultado del negocio',currentBusinessScore())}${metricHtml('Producto listo / aprovechable',product)}</div></div><div class="horizon-card future"><h3>Qué tan preparado quedó para mañana</h3><div class="metric-list">${metricHtml('Suelo y agua',STATE.productiveResources)}${metricHtml('Seguridad del producto',STATE.foodSafety)}${metricHtml('Capacidad para responder',p.res)}</div></div></div></div>
+    <div class="end-section"><div class="two-col"><div class="simple-card"><h3>Fortalezas que construiste</h3><ul>${p.strengths.map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="simple-card"><h3>Lo que todavía merece atención</h3><ul>${p.vulnerabilities.map(x=>`<li>${x}</li>`).join('')}</ul></div></div></div>
+    <div class="end-section"><h2>Decisiones que volvieron a importar</h2><div class="echo-grid">${echoes.map(e=>`<div class="echo-card"><b>${e.t}</b><div>${e.x}</div></div>`).join('')}</div></div>
+    <div class="end-section"><h2>Lo que muestra tu recorrido</h2><div class="lesson-grid">${lessons.map(x=>`<div class="lesson">${x}</div>`).join('')}</div></div>
+    <div class="end-section"><details class="all-decisions"><summary>Ver todas mis decisiones</summary><ul>${allDecisions}</ul></details></div>
+    <div class="reflection"><h3>Para conversar</h3><ul><li>¿Qué decisión te ayudó principalmente hoy?</li><li>¿Cuál construyó capacidad para después?</li><li>¿Dónde tuviste que escoger entre dinero disponible y prevención?</li><li>¿Qué decisión anterior cambió el efecto de un problema posterior?</li><li>¿Qué harías diferente en tu propia agroempresa?</li></ul></div>
+    <div class="end-actions"><button class="btn" id="restartEnd">Jugar de nuevo</button><button class="btn secondary" id="copySummary">Copiar mi resumen</button></div></div>`;
+  $('#restartEnd').addEventListener('click',resetGame);$('#copySummary').addEventListener('click',()=>copySummary(p));updateDebug();window.scrollTo({top:0,behavior:'smooth'});
+}
+function copySummary(p){
+  const text=`Agro Jefas — Mi recorrido
+Perfil: ${p.name}${p.secondary?` + ${p.secondary}`:''}
+Dinero disponible: ${indicatorStatus(STATE.cash)}
+Resultado del negocio: ${indicatorStatus(currentBusinessScore())}
+Suelo y agua: ${indicatorStatus(STATE.productiveResources)}
+Seguridad del producto: ${indicatorStatus(STATE.foodSafety)}
+Preparación para responder: ${indicatorStatus(p.res)}
+
+Mis decisiones:
+${STATE.history.map(x=>`Ronda ${x.round}: ${friendlyText(x.choice)}`).join('\n')}`;
+  navigator.clipboard?.writeText(text).then(()=>alert('Resumen copiado.')).catch(()=>alert(text));
+}
+function updateDebug(){const el=$('#debugState');if(el)el.textContent=JSON.stringify({...STATE,resilienceDerived:Math.round(derivedResilience())},null,2);}
+function startGame(){intro.classList.add('hidden');end.classList.add('hidden');game.classList.remove('hidden');$('#restartTop').classList.remove('hidden');STATE=freshState();rng=mulberry32(CONFIG.seed);window.scrollTo({top:0});renderDecision();}
+function resetGame(){end.classList.add('hidden');game.classList.remove('hidden');STATE=freshState();rng=mulberry32(CONFIG.seed);window.scrollTo({top:0});renderDecision();}
+
+$('#startBtn').addEventListener('click',startGame);
+$('#restartTop').addEventListener('click',resetGame);
+$('#facBtn').addEventListener('click',()=>{$('#facilitator').classList.toggle('open');$('#facBtn').textContent=$('#facilitator').classList.contains('open')?'Ocultar facilitación':'Para facilitación';updateDebug();});
+$('#applySeed').addEventListener('click',()=>{const v=parseInt($('#seedInput').value,10);if(Number.isFinite(v)){CONFIG.seed=v;alert('Semilla guardada. Se aplicará al reiniciar la simulación.');}});
+
+STATE=freshState();updateDebug();
+
+/* =========================================================
+   AUDITORIA INTERNA DE CONSISTENCIA — v1.3 STORYTELLING + UX
+   - 12 decisiones implementadas: SI
+   - 6 rondas funcionales: SI
+   - memoria entre rondas: SI (flags, estados, delays)
+   - efectos inmediatos y diferidos: SI
+   - riesgo separado de evento: SI (RISK_ENGINE)
+   - mercado con gates: SI (eligibility + buyerMode + sales engine)
+   - liquidez funciona como gate de opciones: SI (cashCost)
+   - BPM mediante barreras/capacidad real: SI
+   - resultado económico separado de liquidez: SI
+   - resiliencia sin poder causal: SI (solo derivedResilience)
+   - bonos directos BPA/BPM → dinero: NO EXISTEN
+   - parámetros centralizados: SI (CONFIG)
+   - app móvil y reiniciable: SI
+   - perfil favorable “Sólida y adaptable” sin estrategia universal dominante: SI
+   - onboarding simplificado y rol/misión explícitos: SI
+   - flujo situación → decisión → consecuencia → significado: SI
+   - feedback visible sin puntuaciones exactas para participante: SI
+   - cierre “hoy vs mañana” + decisiones que vuelven a importar: SI
+   - cierre con perfil, historial y reflexión: SI
+   ========================================================= */
+</script>
+</body>
+</html>
