@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-<title>Agro Jefas — Decisiones que mueven tu agroempresa · v1.4</title>
+<title>Agro Jefas — Decisiones que mueven tu agroempresa · v1.5</title>
 <style>
   :root{
     --bg:#f3f4ef; --card:#ffffff; --ink:#17352d; --muted:#66746d; --line:#dfe5df;
@@ -120,7 +120,10 @@
   .decision-question{font-size:24px;color:#173f35;margin:0 0 15px}
   .choice-grid{display:grid;gap:11px}
   .choice{width:100%;text-align:left;background:#fff;border:2px solid #e1e6e2;border-radius:17px;padding:16px 17px;min-height:76px;color:var(--ink);transition:.15s ease}
-  .choice:hover{border-color:#9ab9a6;transform:translateY(-1px)}
+  /* Ninguna alternativa se destaca antes de seleccionarla.
+     Evita que el cursor remanente de un clic anterior simule una preselección.
+     Se conserva el indicador ámbar :focus-visible para accesibilidad con teclado. */
+  .choice:hover:not(:disabled){background:#fff;border-color:#e1e6e2;transform:none}
   .choice:disabled{opacity:.5;cursor:not-allowed;transform:none}
   .choice strong{display:block;font-size:16px;line-height:1.35;margin-bottom:5px}
   .choice small{display:block;color:#5e6c65;line-height:1.45}
@@ -714,7 +717,7 @@ function profileResult(){
 }
 
 /* =========================================================
-   RENDERING — UX v1.4
+   RENDERING — UX v1.5
    ========================================================= */
 const $=s=>document.querySelector(s);
 const intro=$('#intro'), game=$('#game'), end=$('#end'), decisionPanel=$('#decisionPanel'), eventArea=$('#eventArea');
@@ -842,7 +845,9 @@ function stageEcho(round){
 function renderStageIntro(round,evt){
   const s=ROUND_STORIES[round];const echo=stageEcho(round);
   eventArea.innerHTML='';
-  decisionPanel.innerHTML=`<section class="stage-screen"><div class="eyebrow">RONDA ${round} · ${CONFIG.roundNames[round-1]}</div><h1 class="stage-title">${s.title}</h1><p class="stage-copy">${s.copy}</p>${evt?`<div class="stage-event"><b>${friendlyText(evt.title)}</b><div>${friendlyText(evt.text)}</div></div>`:''}${echo?`<div class="past-echo"><b>Una decisión anterior vuelve a importar</b><div>${echo}</div></div>`:''}<button class="btn wide" id="beginRound">Ver la primera decisión</button></section>`;
+  // La primera apertura invita a iniciar; las siguientes evitan llamar "primera" a una decisión ya avanzada.
+  const stageButtonLabel=round===1?'Tomar la primera decisión':'Continuar';
+  decisionPanel.innerHTML=`<section class="stage-screen"><div class="eyebrow">RONDA ${round} · ${CONFIG.roundNames[round-1]}</div><h1 class="stage-title">${s.title}</h1><p class="stage-copy">${s.copy}</p>${evt?`<div class="stage-event"><b>${friendlyText(evt.title)}</b><div>${friendlyText(evt.text)}</div></div>`:''}${echo?`<div class="past-echo"><b>Una decisión anterior vuelve a importar</b><div>${echo}</div></div>`:''}<button class="btn wide" id="beginRound">${stageButtonLabel}</button></section>`;
   $('#beginRound').addEventListener('click',()=>{STATE.flags[`introSeen${round}`]=true;renderDecision();});
 }
 function deltaClass(label,d){
@@ -963,7 +968,10 @@ $('#applySeed').addEventListener('click',()=>{const v=parseInt($('#seedInput').v
 STATE=freshState();updateDebug();
 
 /* =========================================================
-   AUDITORIA INTERNA DE CONSISTENCIA — v1.4 STORYTELLING + SEMÁFORO + UX
+   AUDITORIA INTERNA DE CONSISTENCIA — v1.5 MICROAJUSTES DE NAVEGACIÓN Y NEUTRALIDAD VISUAL
+   - pantalla inicial de Ronda 1: botón "Tomar la primera decisión": SI
+   - pantallas introductorias de Rondas 2–6: botón "Continuar": SI
+   - tarjetas de alternativas sin resaltado verde por hover: SI
    - 12 decisiones implementadas: SI
    - contexto antes de pregunta en todas las decisiones: SI
    - semáforo de estado (Fuerte/Estable/Atención/Presión/Crítico): SI
