@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-<title>Agro Jefas — Decisiones que mueven tu agroempresa · v1.5</title>
+<title>Agro Jefas — Decisiones que mueven tu agroempresa · v1.6</title>
 <style>
   :root{
     --bg:#f3f4ef; --card:#ffffff; --ink:#17352d; --muted:#66746d; --line:#dfe5df;
@@ -69,6 +69,11 @@
   .how-box ol{margin:8px 0 0;padding-left:21px}
   .how-box li{margin:6px 0}
   .key-message{background:var(--gold-soft);border-radius:17px;padding:16px 18px;margin:18px 0;color:#584817}
+  .participant-box{background:#f8faf8;border:1px solid var(--line);border-radius:18px;padding:16px 18px;margin:18px 0 20px}
+  .participant-box label{display:block;font-weight:850;margin-bottom:6px}
+  .participant-box select{width:100%;border:1px solid #cfd8d2;border-radius:12px;padding:12px 13px;background:#fff;color:var(--ink);font:inherit}
+  .participant-box small{display:block;color:#66746d;margin-top:7px;line-height:1.4}
+  .tracking-note{font-size:12px;color:#66746d;margin-top:8px}
   .smallprint{font-size:11px;color:#7a857f;margin-top:16px}
 
   /* GAME */
@@ -222,7 +227,6 @@
   <div class="utilitybar">
     <div class="mini-brand">Agro Jefas</div>
     <div class="utility-actions">
-      <button class="btn ghost" id="facBtn">Para facilitación</button>
       <button class="btn ghost hidden" id="restartTop">Reiniciar</button>
     </div>
   </div>
@@ -300,6 +304,53 @@
         <ol><li>Lee una situación.</li><li>Elige qué harías.</li><li>Mira qué cambió en ese momento.</li><li>Más adelante, algunas decisiones volverán a importar.</li><li>Al final verás cómo quedó tu agroempresa.</li></ol>
       </div>
 
+      <div class="participant-box">
+        <label for="participantSelect">Selecciona tu nombre</label>
+        <select id="participantSelect" autocomplete="off">
+        <option value="">— Selecciona tu nombre —</option>
+        <option value="AGJ-112">Alba Iris Antigua de La Cruz</option>
+        <option value="AGJ-081">Altagracia Milagros Filpo Ramírez</option>
+        <option value="AGJ-013">Amantina Ramírez Recio</option>
+        <option value="AGJ-101">Ángela Mercedes Núñez Faña</option>
+        <option value="AGJ-096">Anny Esmeralda Vega Astacio</option>
+        <option value="AGJ-120">Arelis calcaño Mencía</option>
+        <option value="AGJ-033">Berenice Urbáez Garó</option>
+        <option value="AGJ-034">Bethzaida Isabel Rodríguez Linares</option>
+        <option value="AGJ-036">Carmen Isabel Molina De Cruz</option>
+        <option value="AGJ-021">Chabely Villalona</option>
+        <option value="AGJ-088">Deyanira Solano Pion</option>
+        <option value="AGJ-099">Elvia Carolina López Abreu de Fabián</option>
+        <option value="AGJ-111">Emely Hilario Veras</option>
+        <option value="AGJ-085">Engrise María Luna Díaz</option>
+        <option value="AGJ-051">Enris T. Beliard Muñoz</option>
+        <option value="AGJ-029">Esther Martínez Marte</option>
+        <option value="AGJ-023">Eurania Jazmín Suazo Tauil</option>
+        <option value="AGJ-113">Eva Yohaida Cruz de Espinal</option>
+        <option value="AGJ-002">Evelin Romero Cabral</option>
+        <option value="AGJ-114">Fauris Quelis Marte</option>
+        <option value="AGJ-087">Gabriela Antonia Peña González</option>
+        <option value="AGJ-095">Genesis Carrasco Mata</option>
+        <option value="AGJ-118">Ibelka Paulino Tavarez</option>
+        <option value="AGJ-055">Jenny Almonte</option>
+        <option value="AGJ-069">Julissa del Carmen Pimentel de Pimentel</option>
+        <option value="AGJ-043">Kilssis Yudyd Belilla Soriano</option>
+        <option value="AGJ-038">Laura Villavicencio Francisco</option>
+        <option value="AGJ-072">Lisette Marie Gil Muñoz</option>
+        <option value="AGJ-009">María del R. Cosme Cruz</option>
+        <option value="AGJ-119">María Fernaira Meléndez Terrero</option>
+        <option value="AGJ-026">Nataly Michelle Acosta López</option>
+        <option value="AGJ-063">Nelfi Altagracia García de Mercado</option>
+        <option value="AGJ-061">Ramona Solano Pion</option>
+        <option value="AGJ-006">Rosanna Pérez Vasquez</option>
+        <option value="AGJ-056">Rosina M. Polanco Acosta</option>
+        <option value="AGJ-048">Sarah Esther Figuereo Rodriguez</option>
+        <option value="AGJ-060">Victoria Mateo López</option>
+        <option value="AGJ-082">Walkiria Cruz Álvarez</option>
+        <option value="AGJ-016">Yisleny Yoseny del Jesús Medina</option>
+        <option value="AGJ-058">Yluminada Ortega López</option>
+        </select>
+        <small>Selecciona tu nombre antes de comenzar. Tu código del programa se registrará automáticamente.</small>
+      </div>
       <div class="key-message"><b>No existe una opción perfecta para todo.</b><br>Algunas decisiones cuidan el dinero hoy; otras reducen riesgos o construyen capacidad para después. La idea es observar cómo todo se conecta.</div>
       <button class="btn wide" id="startBtn">Empezar</button>
       <div class="smallprint">Esta es una simulación educativa. Los valores internos sirven para crear situaciones comparables y no son predicciones de una agroempresa real.</div>
@@ -322,34 +373,21 @@
 
   <section id="end" class="end-card hidden"></section>
 
-  <section id="facilitator" class="facilitator">
-    <div class="eyebrow">Vista para facilitación</div>
-    <h2>Cómo funciona el sistema</h2>
-    <p>La simulación no entrega dinero o puntos por seleccionar una BPA/BPM. Las decisiones modifican estados, capacidades, riesgos y condiciones de acceso; los resultados aparecen después de esas interacciones.</p>
-    <div class="system-map">
-      <div class="system-node">Factores externos</div><div class="arrow">↓</div>
-      <div class="system-node">Decisiones</div><div class="arrow">↓</div>
-      <div class="system-node">Capacidades y procesos</div><div class="arrow">↓</div>
-      <div class="system-node">Riesgos / resultados intermedios</div><div class="arrow">↓</div>
-      <div class="system-node">Producto y capacidad comercial</div><div class="arrow">↓</div>
-      <div class="system-node">Ventas / costos</div><div class="arrow">↓</div>
-      <div class="system-node">Resultado del negocio</div>
-    </div>
-    <div class="tag-list"><span class="tag">Riesgo ≠ evento</span><span class="tag">Efectos diferidos</span><span class="tag">Gates comerciales</span><span class="tag">Memoria causal</span><span class="tag">Dinero disponible ≠ resultado</span><span class="tag">Resiliencia = lectura derivada</span></div>
-    <hr style="border:0;border-top:1px solid var(--line);margin:18px 0">
-    <h3>Control de escenario</h3>
-    <div class="seed-box"><label for="seedInput"><b>Semilla</b></label><input id="seedInput" type="number" value="20260924"><button class="btn secondary" id="applySeed">Aplicar al reiniciar</button></div>
-    <p style="font-size:12px;color:var(--muted)">La semilla permite repetir escenarios comparables. El azar está limitado y no sustituye el efecto de las decisiones.</p>
-    <details><summary><b>Calibración vigente</b></summary><p style="font-size:12px;color:var(--muted)">Se mantiene la calibración por trayectorias y el perfil “Sólida y adaptable”. La calibración mantiene el punto de partida de caja como estable, no holgado, y el volumen piloto como una entrada gradual al mercado sin castigar desproporcionadamente el resultado de corto plazo. En v1.4 se mejoró la narrativa y la lectura visual de estados sin cambiar la arquitectura causal.</p></details>
-    <details><summary><b>Variables internas principales</b></summary><pre id="debugState" style="white-space:pre-wrap;background:#f7f8f6;padding:12px;border-radius:12px;border:1px solid var(--line);font-size:11px"></pre></details>
-  </section>
 
-  <footer>Versión 1.4 · Agro Jefas · Simulación educativa de decisiones</footer>
+  <footer>Versión 1.6 · Agro Jefas · Simulación educativa de decisiones</footer>
 </div>
 <script>
 /* =========================================================
    CONFIG — PARAMETROS PEDAGOGICOS PROVISIONALES
    ========================================================= */
+const TRACKING = {
+  // Pega aquí la URL /exec de tu Web App de Google Apps Script.
+  // Si queda vacía, la simulación funciona normalmente pero no envía datos.
+  endpoint: 'https://script.google.com/macros/s/AKfycbyMdCxa9Q0TEuBIfPDOa33ndMiDiVdo6b0kSPVEMEJzMoi6s3vI7hrOvDOqdMqnEE9w1Q/exec',
+  sessionId: 'AGROJEFAS-2026'
+};
+let PARTICIPANT = { name:'', code:'', runId:'' };
+
 const CONFIG = {
   seed: 20260924,
   effect: { LOW:4, MEDIUM:8, HIGH:14 },
@@ -754,6 +792,49 @@ const DELTA_NAMES={
   'Demanda aceptada':'Pedido aceptado','Presión operativa':'Presión sobre el negocio','Capacidad recuperada':'Capacidad de operación','Respuesta focalizada':'Capacidad para priorizar',
   'Exposición operativa':'Riesgo operativo','Demanda extra':'Pedido adicional'
 };
+function makeRunId(){
+  if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return 'run-'+Date.now()+'-'+Math.random().toString(36).slice(2,10);
+}
+function trackingEnabled(){ return /^https:\/\//i.test(TRACKING.endpoint); }
+function snapshotForTracking(){
+  updateDerived();
+  const profile = STATE.finished ? profileResult() : null;
+  return {
+    round:STATE.round,
+    decisionIndex:STATE.decisionIndex,
+    cash:Math.round(STATE.cash),
+    businessResult:Math.round(STATE.businessResult),
+    production:Math.round(STATE.round<4?STATE.productionPotential:(STATE.usableProduct||STATE.productionPotential)),
+    productiveResources:Math.round(STATE.productiveResources),
+    foodSafety:Math.round(STATE.foodSafety),
+    operationalSafety:Math.round(STATE.operationalSafety),
+    waterStress:Math.round(STATE.waterStress),
+    traceability:Math.round(STATE.traceability),
+    eligibility:Math.round(STATE.eligibility),
+    resilience:Math.round(derivedResilience()),
+    profile:profile?profile.name:''
+  };
+}
+function sendTracking(eventType, extra={}){
+  if(!trackingEnabled() || !PARTICIPANT.code) return;
+  const payload={
+    timestamp:new Date().toISOString(),
+    sessionId:TRACKING.sessionId,
+    participantCode:PARTICIPANT.code,
+    participantName:PARTICIPANT.name,
+    runId:PARTICIPANT.runId,
+    eventType,
+    seed:CONFIG.seed,
+    ...snapshotForTracking(),
+    ...extra
+  };
+  try{
+    const body=new URLSearchParams({payload:JSON.stringify(payload)});
+    fetch(TRACKING.endpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body,keepalive:true}).catch(()=>{});
+  }catch(e){}
+}
+
 function friendlyText(s=''){
   return String(s)
    .replace(/\bliquidez\b/gi,'dinero disponible')
@@ -887,6 +968,7 @@ function choose(i){
   const feedback=c.apply();updateDerived();
   STATE.history.push({round:d.round,id:d.id,choice:c.label});
   if(d.after)d.after();updateDerived();
+  sendTracking('decision',{decisionId:d.id,decisionTitle:friendlyText(typeof d.title==='function'?d.title():d.title),choiceIndex:i,choice:friendlyText(c.label)});
   const newLogs=STATE.eventLog.slice(logStart);
   const afterStates=Object.fromEntries(indicatorItems().map(([n,v])=>[n,{label:indicatorStatus(v),key:indicatorStatusKey(v)}]));
   const stateChanges=Object.keys(afterStates).filter(n=>beforeStates[n]&&beforeStates[n].label!==afterStates[n].label).slice(0,3);
@@ -929,7 +1011,8 @@ function systemLessons(){
 function metricHtml(label,score){const k=indicatorStatusKey(score);return `<div class="metric-row"><b>${label}</b><span class="metric-status state-${k}">${indicatorStatus(score)}</span><div class="metric-bar"><i class="state-${k}" style="width:${clamp(score)}%"></i></div></div>`;}
 function renderEnd(){
   game.classList.add('hidden');end.classList.remove('hidden');$('#restartTop').classList.remove('hidden');
-  const p=profileResult();const sales=STATE.flags.sales||{base:0,extra:0,total:0};
+  const p=profileResult();
+  if(!STATE.flags.trackingFinished){ STATE.flags.trackingFinished=true; sendTracking('finish',{finalProfile:p.name,secondaryProfile:p.secondary||'',decisions:STATE.history.map(x=>({round:x.round,id:x.id,choice:friendlyText(x.choice)}))}); }const sales=STATE.flags.sales||{base:0,extra:0,total:0};
   const product=clamp(STATE.sellablePotential||STATE.usableProduct||STATE.productionPotential);
   const echoes=causalEchoes();const lessons=systemLessons();
   const allDecisions=STATE.history.map(x=>`<li><b>Ronda ${x.round}:</b> ${friendlyText(x.choice)}</li>`).join('');
@@ -957,18 +1040,25 @@ ${STATE.history.map(x=>`Ronda ${x.round}: ${friendlyText(x.choice)}`).join('\n')
   navigator.clipboard?.writeText(text).then(()=>alert('Resumen copiado.')).catch(()=>alert(text));
 }
 function updateDebug(){const el=$('#debugState');if(el)el.textContent=JSON.stringify({...STATE,resilienceDerived:Math.round(derivedResilience())},null,2);}
-function startGame(){intro.classList.add('hidden');end.classList.add('hidden');game.classList.remove('hidden');$('#restartTop').classList.remove('hidden');STATE=freshState();rng=mulberry32(CONFIG.seed);window.scrollTo({top:0});renderDecision();}
-function resetGame(){end.classList.add('hidden');game.classList.remove('hidden');STATE=freshState();rng=mulberry32(CONFIG.seed);window.scrollTo({top:0});renderDecision();}
+function startGame(){
+  const sel=$('#participantSelect');
+  const code=(sel?.value||'').trim();
+  const name=(sel?.options?.[sel.selectedIndex]?.text||'').trim();
+  if(!code){ alert('Selecciona tu nombre antes de comenzar.'); sel?.focus(); return; }
+  PARTICIPANT={name,code,runId:makeRunId()};
+  intro.classList.add('hidden');end.classList.add('hidden');game.classList.remove('hidden');$('#restartTop').classList.remove('hidden');STATE=freshState();rng=mulberry32(CONFIG.seed);sendTracking('start');window.scrollTo({top:0});renderDecision();
+}
+function resetGame(){
+  end.classList.add('hidden');game.classList.remove('hidden');STATE=freshState();rng=mulberry32(CONFIG.seed);PARTICIPANT.runId=makeRunId();sendTracking('restart');window.scrollTo({top:0});renderDecision();
+}
 
 $('#startBtn').addEventListener('click',startGame);
 $('#restartTop').addEventListener('click',resetGame);
-$('#facBtn').addEventListener('click',()=>{$('#facilitator').classList.toggle('open');$('#facBtn').textContent=$('#facilitator').classList.contains('open')?'Ocultar facilitación':'Para facilitación';updateDebug();});
-$('#applySeed').addEventListener('click',()=>{const v=parseInt($('#seedInput').value,10);if(Number.isFinite(v)){CONFIG.seed=v;alert('Semilla guardada. Se aplicará al reiniciar la simulación.');}});
 
-STATE=freshState();updateDebug();
+STATE=freshState();
 
 /* =========================================================
-   AUDITORIA INTERNA DE CONSISTENCIA — v1.5 MICROAJUSTES DE NAVEGACIÓN Y NEUTRALIDAD VISUAL
+   AUDITORIA INTERNA DE CONSISTENCIA — v1.6 REGISTRO GRUPAL Y SELECCIÓN DE PARTICIPANTE
    - pantalla inicial de Ronda 1: botón "Tomar la primera decisión": SI
    - pantallas introductorias de Rondas 2–6: botón "Continuar": SI
    - tarjetas de alternativas sin resaltado verde por hover: SI
@@ -997,3 +1087,4 @@ STATE=freshState();updateDebug();
 </script>
 </body>
 </html>
+
